@@ -104,6 +104,7 @@ nav{
 }
 .nav-search{
   flex:1;max-width:320px;
+  margin-left: auto; /* Arama kutusunu sağa yaslamak için eklendi */
   display:flex;align-items:center;gap:10px;
   background: rgba(255, 255, 255, 0.06);
   border:1px solid var(--border);
@@ -418,7 +419,10 @@ iframe, video{
   }
   
   nav{padding:0 14px}
-  .nav-search{max-width:140px}
+  .nav-search{
+    max-width:140px;
+    margin-left: auto;
+  }
   
   .btn-theater span { font-size: 16px; }
   .btn-theater { padding: 6px 10px; }
