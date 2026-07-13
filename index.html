@@ -565,12 +565,12 @@ iframe, video{
 </div>
 
 <script>
-// GENEL REKLAM LİNKİ (Eğer kanala özel adLink girilmemişse bu tetiklenir)
-const DEFAULT_AD_LINK = "https://ay.live/TipQcs";
+// YENİ GÜNCEL GENEL REKLAM LİNKİ
+const DEFAULT_AD_LINK = "https://ay.live/s7Z7FV";
 
 // ─── KANAL VERİ TABANI ───
 const channels = [
-  {id:1,  name:"BeIN Sports 1",  cat:"spor", logo:"https://royaltv31.com/img/beinsports1.png", stream:"https://justintaraftarium.net/ch?id=b1", adLink:"https://ay.live/TipQcs"},
+  {id:1,  name:"BeIN Sports 1",  cat:"spor", logo:"https://royaltv31.com/img/beinsports1.png", stream:"https://justintaraftarium.net/ch?id=b1"},
   {id:2,  name:"BeIN Sports 2",  cat:"spor", logo:"https://royaltv31.com/img/beinsports2.png", stream:"https://justintaraftarium.net/ch?id=b2", adLink:"https://ay.live/Dnrojr"},
   {id:3,  name:"BeIN Sports 3",  cat:"spor", logo:"https://royaltv31.com/img/beinsports3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
   {id:4,  name:"BeIN Sports 4",  cat:"spor", logo:"https://royaltv31.com/img/beinsports4.png", stream:"https://justintaraftarium.net/ch?id=b4"},
@@ -659,7 +659,7 @@ function selectChannel(c){
   const hlsPlayer = document.getElementById('hlsPlayer');
   const interstitial = document.getElementById('advInterstitial');
 
-  // Player'ları tamamen temizle ve gizle
+  // Player'ları sıfırla
   if (hlsInstance) {
     hlsInstance.destroy();
     hlsInstance = null;
@@ -670,14 +670,23 @@ function selectChannel(c){
   iframePlayer.style.display = "none";
   iframePlayer.src = "";
 
-  // BÜTÜN KANALLARDA İLK TIKLAMADA KESİNLİKLE REKLAM PANELİNİ AÇIYORUZ
-  interstitial.style.display = "flex";
-  document.getElementById('advText').textContent = "Yayın hakları ve sunucu masrafları sebebiyle reklamı geçerek doğrudan orijinal kesintisiz yayına bağlanabilirsiniz.";
+  // TOKEN KONTROLÜ (24 saatlik süre limiti ile tek seferlik reklam)
+  const tokenExpire = localStorage.getItem('fatbok_premium_token');
   
-  const advBtn = document.getElementById('advBtn');
-  advBtn.className = "btn-adv-action";
-  advBtn.textContent = "🔗 Reklamı Geç ve İzle";
-  advBtn.setAttribute('onclick', 'handleAdClick()');
+  if (tokenExpire && parseInt(tokenExpire) > Date.now()) {
+    // Eğer geçerli token varsa reklam sorma, direkt yayını başlat
+    interstitial.style.display = "none";
+    startActualStream(c);
+  } else {
+    // Token yoksa ya da süresi bittiyse reklam panelini aç
+    interstitial.style.display = "flex";
+    document.getElementById('advText').textContent = "Yayın hakları ve sunucu masrafları sebebiyle reklamı geçerek doğrudan orijinal kesintisiz yayına bağlanabilirsiniz.";
+    
+    const advBtn = document.getElementById('advBtn');
+    advBtn.className = "btn-adv-action";
+    advBtn.textContent = "🔗 Reklamı Geç ve İzle";
+    advBtn.setAttribute('onclick', 'handleAdClick()');
+  }
 
   startAmbientMode(c.cat);
 }
@@ -685,12 +694,12 @@ function selectChannel(c){
 function handleAdClick() {
   if (!selectedChannelObj) return;
   
-  // Eğer özel reklam adresi yoksa genel ay.live reklam linkini aç
+  // Hedef reklam linkini seç
   const targetAdLink = selectedChannelObj.adLink ? selectedChannelObj.adLink : DEFAULT_AD_LINK;
   
   window.open(targetAdLink, '_blank');
 
-  // Kullanıcı arayüzünü güncelle ve yayını başlatma butonuna çevir
+  // Arayüzü "Yayını Başlat" aşamasına geçir
   const advBtn = document.getElementById('advBtn');
   document.getElementById('advText').textContent = "Reklamı yan sekmede açtık. Reklamı geçtikten sonra aşağıdaki butona tıklayarak yayını başlatabilirsiniz.";
   
@@ -702,6 +711,11 @@ function handleAdClick() {
 function handleStreamStart() {
   if (!selectedChannelObj) return;
   
+  // Reklam başarıyla geçildi: 24 SAATLİK REKLAMSIZ GEZİNME TOKENI TANIMLA
+  const expireTime = Date.now() + (24 * 60 * 60 * 1000); // 24 Saat
+  localStorage.setItem('fatbok_premium_token', expireTime.toString());
+
+  // Arayüzü kapat ve asıl akışı yükle
   document.getElementById('advInterstitial').style.display = "none";
   startActualStream(selectedChannelObj);
 }
