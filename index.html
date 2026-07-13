@@ -91,7 +91,7 @@ nav{
   -webkit-backdrop-filter: blur(40px) saturate(230%);
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;
-  justify-content: space-between; /* İçerikleri iki uca ve ortaya dağıtmak için güncellendi */
+  justify-content: space-between;
   padding:0 24px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
@@ -101,7 +101,7 @@ nav{
   background:linear-gradient(135deg,#ffffff 30%,var(--accent));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   white-space:nowrap;flex-shrink:0;
-  width: 150px; /* Ortalamanın düzgün çalışması için logoya sabit genişlik verildi */
+  width: 150px;
 }
 .nav-search{
   flex:1;
@@ -111,7 +111,7 @@ nav{
   border:1px solid var(--border);
   border-radius:8px;padding:0 14px;height:36px;
   box-shadow: inset 0 1px 4px rgba(0,0,0,0.3);
-  margin: 0 auto; /* Arama kutusunu nav bar içinde tam ortalamak için eklendi */
+  margin: 0 auto;
 }
 .nav-search input{
   background:none;border:none;outline:none;
@@ -121,7 +121,7 @@ nav{
 .nav-search input::placeholder{color:var(--muted)}
 .search-icon{color:var(--muted);font-size:14px;flex-shrink:0}
 .nav-spacer {
-  width: 150px; /* Sağ tarafı dengeleyip arama kutusunu tam ortada tutmak için hayali boşluk */
+  width: 150px;
   flex-shrink: 0;
 }
 .live-dot{width:7px;height:7px;background:#34c759;border-radius:50%;animation:blink 1s infinite}
@@ -188,7 +188,7 @@ nav{
 .ch-list::-webkit-scrollbar{width:4px}
 .ch-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:2px}
 
-/* APPLE SHIMMER (IŞILTI) KART YAPISI */
+/* KART YAPISI */
 .ch-card{
   display:flex;align-items:center;gap:12px;
   padding:12px;border-radius:8px;
@@ -291,7 +291,7 @@ nav{
   position: relative;
 }
 
-/* ─── YOUTUBE AMBIENT MODE (SİNEMATİK IŞIK KATMANI) ─── */
+/* ─── YOUTUBE AMBIENT MODE ─── */
 .ambient-glow {
   position: absolute;
   top: 50%; left: 50%;
@@ -335,7 +335,7 @@ nav{
   font-size:22px;font-weight:800;letter-spacing:1px;
 }
 
-/* APPLE THEATER MODE BUTTON */
+/* THEATER MODE BUTTON */
 .btn-theater {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
@@ -367,6 +367,61 @@ nav{
 }
 .badge-live{background:rgba(0, 122, 255, 0.15);color:var(--accent);border:1px solid rgba(0, 122, 255, 0.3);display:flex;align-items:center;gap:5px}
 
+/* INTERSTITIAL AD LAYER (REKLAM GEÇİŞ PANELİ) */
+.adv-interstitial {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 18, 0.92);
+  backdrop-filter: blur(35px);
+  -webkit-backdrop-filter: blur(35px);
+  z-index: 99;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+.adv-interstitial-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 450px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+.adv-interstitial h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.adv-interstitial p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+.btn-ad-trigger {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
+}
+.btn-ad-trigger:hover {
+  background: var(--blue);
+  box-shadow: 0 6px 20px rgba(0, 85, 255, 0.6);
+  transform: translateY(-2px);
+}
+
 /* EMBED PLAYER YAPISI */
 .video-wrap{
   flex:1;background:#000;position:relative;overflow:hidden;
@@ -395,46 +450,39 @@ iframe, video{
     grid-template-rows: auto 1fr;
     height: calc(100vh - 58px);
   }
-  
   .layout.theater-active {
     grid-template-columns: 1fr;
     grid-template-rows: calc(100vh - 58px) 0px;
   }
-  
   .ch-sidebar{
     max-height: 50vh;
     border-right:none;
     order:2;
   }
-  
   .layout.theater-active .ch-sidebar {
     transform: translateY(100%);
     max-height: 0px;
     opacity: 0;
     padding: 0;
   }
-  
   .player-area{
     order:1;
     height: 40vh;
     transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  
   .layout.theater-active .player-area {
     height: calc(100vh - 58px);
   }
-  
   nav{padding:0 14px}
   .nav-logo{ width: auto; }
   .nav-search{
     max-width: 160px;
-    margin: 0 0 0 auto; /* Mobilde sıkışmaması için sağa yanaşmasını koruduk */
+    margin: 0 0 0 auto;
   }
-  .nav-spacer { display: none; } /* Mobilde hayali boşluğu gizle */
-  
+  .nav-spacer { display: none; }
   .btn-theater span { font-size: 16px; }
   .btn-theater { padding: 6px 10px; }
-  .btn-theater text { display: none; }
+  .btn-theater .btn-text { display: none; }
 }
 </style>
 </head>
@@ -448,7 +496,8 @@ iframe, video{
     <span class="search-icon">🔍</span>
     <input type="text" placeholder="Kanal ara..." id="searchInput" oninput="filterChannels(this.value)"/>
   </div>
-  <div class="nav-spacer"></div> </nav>
+  <div class="nav-spacer"></div>
+</nav>
 
 <div class="layout" id="mainLayout">
 
@@ -476,6 +525,14 @@ iframe, video{
   <div class="player-area">
     <div class="ambient-glow" id="ambientGlow"></div>
 
+    <div id="advInterstitial" class="adv-interstitial">
+      <div class="adv-interstitial-box">
+        <h2>🔒 Yayın Kilitli</h2>
+        <p id="advText">Sitemizin ayakta kalabilmesi için tek seferlik reklamı geçmeniz gerekmektedir. Reklam bittiğinde bu sekmeye dönün, yayın otomatik açılacaktır.</p>
+        <button id="advBtn" class="btn-ad-trigger" onclick="handleAdClick()">🔗 Reklamı Geç ve Kilidi Aç</button>
+      </div>
+    </div>
+
     <div class="now-header">
       <div class="now-logo" id="nowLogo"></div>
       <div class="now-info">
@@ -499,9 +556,12 @@ iframe, video{
 </div>
 
 <script>
+// ─── REKLAM & TOKEN CONFIG ───
+const GLOBAL_AD_LINK = "https://ay.live/s7Z7FV"; 
+const AD_DURATION = 3600000; // 1 Saat (ms)
+
 // ─── KANAL VERİ TABANI ───
 const channels = [
-  // beIN Sports Grubu
   {id:1,  name:"BeIN Sports 1",  cat:"spor", logo:"https://royaltv31.com/img/beinsports1.png", stream:"https://justintaraftarium.net/ch?id=b1"},
   {id:2,  name:"BeIN Sports 2",  cat:"spor", logo:"https://royaltv31.com/img/beinsports2.png", stream:"https://justintaraftarium.net/ch?id=b2"},
   {id:3,  name:"BeIN Sports 3",  cat:"spor", logo:"https://royaltv31.com/img/beinsports3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
@@ -509,32 +569,20 @@ const channels = [
   {id:5,  name:"BeIN Sports 5",  cat:"spor", logo:"https://royaltv31.com/img/beinsports5.png", stream:"https://justintaraftarium.net/ch?id=b5"},
   {id:6,  name:"BeIN Max 1",     cat:"spor", logo:"https://royaltv31.com/img/beinsportsmax1.png", stream:"https://justintaraftarium.net/ch?id=bm1"},
   {id:7,  name:"BeIN Max 2",     cat:"spor", logo:"https://royaltv31.com/img/beinsportsmax2.png", stream:"https://justintaraftarium.net/ch?id=bm2"},
-  
-  // S Sport Grubu
   {id:8,  name:"S Sport 1",      cat:"spor", logo:"https://royaltv31.com/img/ssport1.png", stream:"https://justintaraftarium.net/ch?id=ss"},
   {id:22, name:"S Sport 1 (Yedek)", cat:"spor", logo:"https://royaltv31.com/img/ssport1.png", stream:"https://54b53072540eeeb8f8e9343e71f28176.biz/705/mono.m3u8"},
   {id:9,  name:"S Sport 2",      cat:"spor", logo:"https://royaltv31.com/img/ssport2.png", stream:"https://justintaraftarium.net/ch?id=ss2"},
-  
-  // Tivibu Grubu
   {id:10, name:"Tivibu 1",       cat:"spor", logo:"https://royaltv31.com/img/tivibu1.png", stream:"https://justintaraftarium.net/ch?id=t1"},
   {id:11, name:"Tivibu 2",       cat:"spor", logo:"https://royaltv31.com/img/tivibu2.png", stream:"https://justintaraftarium.net/ch?id=t2"},
   {id:12, name:"Tivibu 3",       cat:"spor", logo:"https://royaltv31.com/img/tivibu3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
   {id:13, name:"Tivibu 4",       cat:"spor", logo:"https://royaltv31.com/img/tivibu4.png", stream:"https://justintaraftarium.net/ch?id=t4"},
-  
-  // Smartspor Grubu
   {id:14, name:"Smartspor",      cat:"spor", logo:"https://royaltv31.com/img/smartspor.png", stream:"https://justintaraftarium.net/ch?id=smarts"},
   {id:15, name:"Smartspor 2",    cat:"spor", logo:"https://royaltv31.com/img/smartspor2.png", stream:"https://justintaraftarium.net/ch?id=sms2"},
-  
-  // Dijital Platformlar
   {id:16, name:"EXXEN",          cat:"spor", logo:"https://royaltv31.com/img/exxen.png", stream:"https://justintaraftarium.net/ch?id=ex1"},
   {id:17, name:"Tabii Spor",     cat:"spor", logo:"https://royaltv31.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex7"},
   {id:18, name:"Tabii Spor 2",   cat:"spor", logo:"https://royaltv31.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex2"},
-  
-  // Diğer Spor Kanalları
   {id:19, name:"TRT Spor",       cat:"spor", logo:"https://royaltv31.com/img/trtspornew.png", stream:"https://justintaraftarium.net/ch?id=trtspor"},
   {id:21, name:"A Spor",         cat:"spor", logo:"https://royaltv31.com/img/aspornew.png", stream:"https://justintaraftarium.net/ch?id=as"},
-
-  // Ulusal Kanallar
   {id:25, name:"TRT 1",          cat:"ulusal", logo:"https://royaltv31.com/img/trt1.png", stream:"https://justintaraftarium.net/ch?id=trt1"},
   {id:26, name:"ATV",            cat:"ulusal", logo:"https://royaltv31.com/img/atv.png", stream:"https://justintaraftarium.net/ch?id=atv"},
   {id:27, name:"TV 8",           cat:"ulusal", logo:"https://royaltv31.com/img/tv8.png", stream:"https://justintaraftarium.net/ch?id=tv8"},
@@ -548,6 +596,19 @@ let currentSearch = '';
 let activeId = null;
 let ambientInterval = null;
 let hlsInstance = null;
+let selectedChannelObj = null;
+
+// Sayfa ilk yüklendiğinde hafızada bekleyen bir kanal ve geçerli bir token var mı bak
+window.onload = () => {
+  const pendingId = sessionStorage.getItem('pendingChannel');
+  const isWatched = localStorage.getItem('ad_watched');
+  const expire = localStorage.getItem('ad_expire');
+
+  if(pendingId && isWatched === 'true' && expire > Date.now()) {
+    const chan = channels.find(c => c.id == pendingId);
+    if(chan) selectChannel(chan);
+  }
+};
 
 // ─── LİSTEYİ OLUŞTURMA ───
 function renderList(triggerShimmer = false){
@@ -581,9 +642,10 @@ function renderList(triggerShimmer = false){
   });
 }
 
-// ─── KANAL SEÇME VE PLAYERS SEÇİMİ ───
+// ─── KANAL SEÇME VE REKLAM DOĞRULAMA ───
 function selectChannel(c){
   activeId=c.id;
+  selectedChannelObj = c;
   renderList();
 
   const logoEl = document.getElementById('nowLogo');
@@ -592,11 +654,69 @@ function selectChannel(c){
   document.getElementById('nowName').textContent=c.name;
   document.getElementById('theaterBtn').style.display = 'flex';
   document.getElementById('vidOverlay').style.display = 'none';
+
+  // Token Durum Kontrolü
+  const isWatched = localStorage.getItem('ad_watched');
+  const expire = localStorage.getItem('ad_expire');
+
+  if (isWatched === 'true' && expire > Date.now()) {
+    // Reklam aşılmış, yayını çalıştır
+    startActualStream(c);
+  } else {
+    // Reklam izlenmemiş, katmanı göster, playerları gizle
+    document.getElementById('advInterstitial').style.display = "flex";
+    document.getElementById('embedPlayer').style.display = "none";
+    document.getElementById('hlsPlayer').style.display = "none";
+  }
+
+  startAmbientMode(c.cat);
+}
+
+// ─── REKLAM AKSİYONU ───
+function handleAdClick() {
+  if (!selectedChannelObj) return;
+
+  // Reklam dönüşü hangi kanalın açılacağını hafızaya al
+  sessionStorage.setItem('pendingChannel', selectedChannelObj.id);
+
+  // Reklam linkini yeni sekmede tetikle
+  window.open(GLOBAL_AD_LINK, '_blank');
+
+  // Tokenı yerleştir (1 Saatlik Süre Başlatılıyor)
+  localStorage.setItem('ad_watched', 'true');
+  localStorage.setItem('ad_expire', Date.now() + AD_DURATION);
+
+  // Buton durumunu "Kontrol et" olarak güncelle
+  document.getElementById('advText').textContent = "Reklam sayfasına yönlendirildiniz. Reklamı tamamlayıp buraya döndüğünüzde yayın otomatik açılmazsa aşağıdaki butona basın.";
+  const advBtn = document.getElementById('advBtn');
+  advBtn.textContent = "▶ Kontrol Et ve Başlat";
+  advBtn.setAttribute('onclick', 'checkAndStartStream()');
+}
+
+// Manüel Kontrol Et Butonu Fonksiyonu
+function checkAndStartStream() {
+  const isWatched = localStorage.getItem('ad_watched');
+  const expire = localStorage.getItem('ad_expire');
+
+  if (isWatched === 'true' && expire > Date.now() && selectedChannelObj) {
+    startActualStream(selectedChannelObj);
+  } else {
+    alert("Token doğrulanamadı veya süresi doldu. Lütfen reklamı geçin.");
+    // Eski haline döndür
+    document.getElementById('advText').textContent = "Sitemizin ayakta kalabilmesi için tek seferlik reklamı geçmeniz gerekmektedir. Reklam bittiğinde bu sekmeye dönün, yayın otomatik açılacaktır.";
+    const advBtn = document.getElementById('advBtn');
+    advBtn.textContent = "🔗 Reklamı Geç ve Kilidi Aç";
+    advBtn.setAttribute('onclick', 'handleAdClick()');
+  }
+}
+
+// ─── GERÇEK YAYIN TETİKLEME FONKSİYONU ───
+function startActualStream(c) {
+  document.getElementById('advInterstitial').style.display = "none";
   
   const iframePlayer = document.getElementById('embedPlayer');
   const hlsPlayer = document.getElementById('hlsPlayer');
 
-  // Mevcut HLS akışı varsa temizle
   if (hlsInstance) {
     hlsInstance.destroy();
     hlsInstance = null;
@@ -604,7 +724,6 @@ function selectChannel(c){
   hlsPlayer.pause();
   hlsPlayer.src = "";
 
-  // Link .m3u8 içeriyor mu kontrol et
   if (c.stream.includes('.m3u8')) {
     iframePlayer.style.display = "none";
     iframePlayer.src = "";
@@ -615,18 +734,25 @@ function selectChannel(c){
       hlsInstance.loadSource(c.stream);
       hlsInstance.attachMedia(hlsPlayer);
     } else if (hlsPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-      // Safari / iOS için yerel destek
       hlsPlayer.src = c.stream;
     }
   } else {
-    // Normal Iframe Kanalları
     hlsPlayer.style.display = "none";
     iframePlayer.style.display = "block";
     iframePlayer.src = c.stream; 
   }
-
-  startAmbientMode(c.cat);
 }
+
+// ─── OTO-PİLOT: KULLANICI SEKMEYE GERİ DÖNDÜĞÜNDE TETİKLENİR ───
+window.addEventListener('focus', () => {
+  const isWatched = localStorage.getItem('ad_watched');
+  const expire = localStorage.getItem('ad_expire');
+  const isPanelOpen = document.getElementById('advInterstitial').style.display === 'flex';
+
+  if (isPanelOpen && isWatched === 'true' && expire > Date.now() && selectedChannelObj) {
+    startActualStream(selectedChannelObj);
+  }
+});
 
 // ─── YOUTUBE AMBIENT MODE ───
 function startAmbientMode(category) {
