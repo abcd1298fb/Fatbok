@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FATBOK — Canlı Maç İzle</title>
+<title>FATBOK</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -34,7 +34,7 @@ body{
   position: relative;
 }
 
-/* ─── DİNAMİK RENK DEĞİŞTİREN LIQUID GLASS ARKA PLAN ─── */
+/* ─── ARKA PLAN ─── */
 .liquid-bg {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -127,7 +127,7 @@ nav{
 .live-dot{width:7px;height:7px;background:#34c759;border-radius:50%;animation:blink 1s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 
-/* ─── LAYOUT & THEATER MODE ANIMATION ─── */
+/* ─── ANIMATION ─── */
 .layout{
   display:grid;
   grid-template-columns:320px 1fr;
@@ -188,7 +188,7 @@ nav{
 .ch-list::-webkit-scrollbar{width:4px}
 .ch-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:2px}
 
-/* APPLE SHIMMER KART YAPISI */
+/* KART YAPISI */
 .ch-card{
   display:flex;align-items:center;gap:12px;
   padding:12px;border-radius:8px;
@@ -291,7 +291,7 @@ nav{
   position: relative;
 }
 
-/* ─── SINEMATİK IŞIK KATMANI ─── */
+/* ─── SINEMATİK ─── */
 .ambient-glow {
   position: absolute;
   top: 50%; left: 50%;
@@ -335,7 +335,7 @@ nav{
   font-size:22px;font-weight:800;letter-spacing:1px;
 }
 
-/* APPLE THEATER MODE BUTTON */
+/* BUTTON*/
 .btn-theater {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
@@ -388,7 +388,7 @@ iframe, video{
   z-index:10;
 }
 
-/* ─── INTERSTITIAL WRAPPER (REKLAM GEÇİŞ ALANI) ─── */
+/* ─── REKLAM GEÇİŞ ALANI ─── */
 .adv-interstitial {
   position: absolute;
   inset: 0;
@@ -552,7 +552,7 @@ iframe, video{
       <div id="advInterstitial" class="adv-interstitial" style="display: none;">
         <div class="adv-interstitial-card">
           <h3>Yayın Hazırlanıyor</h3>
-          <p id="advText">Yayın hakları ve sunucu masrafları sebebiyle reklamı geçerek doğrudan orijinal kesintisiz yayına bağlanabilirsiniz.</p>
+          <p id="advText">Sadece 1 Reklam İzleyerek Yayına Bağlanabilirsiniz.</p>
           <button id="advBtn" class="btn-adv-action" onclick="handleAdClick()">🔗 Reklamı Geç ve İzle</button>
         </div>
       </div>
@@ -565,42 +565,42 @@ iframe, video{
 </div>
 
 <script>
-// YENİ GÜNCEL GENEL REKLAM LİNKİ
+// REKLAM LİNKİ
 const DEFAULT_AD_LINK = "https://ay.live/s7Z7FV";
 
 // ─── KANAL VERİ TABANI ───
 const channels = [
-  {id:1,  name:"BeIN Sports 1",  cat:"spor", logo:"https://royaltv31.com/img/beinsports1.png", stream:"https://justintaraftarium.net/ch?id=b1"},
-  {id:2,  name:"BeIN Sports 2",  cat:"spor", logo:"https://royaltv31.com/img/beinsports2.png", stream:"https://justintaraftarium.net/ch?id=b2"},
-  {id:3,  name:"BeIN Sports 3",  cat:"spor", logo:"https://royaltv31.com/img/beinsports3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
-  {id:4,  name:"BeIN Sports 4",  cat:"spor", logo:"https://royaltv31.com/img/beinsports4.png", stream:"https://justintaraftarium.net/ch?id=b4"},
-  {id:5,  name:"BeIN Sports 5",  cat:"spor", logo:"https://royaltv31.com/img/beinsports5.png", stream:"https://justintaraftarium.net/ch?id=b5"},
-  {id:6,  name:"BeIN Max 1",     cat:"spor", logo:"https://royaltv31.com/img/beinsportsmax1.png", stream:"https://justintaraftarium.net/ch?id=bm1"},
-  {id:7,  name:"BeIN Max 2",     cat:"spor", logo:"https://royaltv31.com/img/beinsportsmax2.png", stream:"https://justintaraftarium.net/ch?id=bm2"},
+  {id:1,  name:"BeIN Sports 1",  cat:"spor", logo:"https://royaltv32.com/img/beinsports1.png", stream:"https://justintaraftarium.net/ch?id=b1"},
+  {id:2,  name:"BeIN Sports 2",  cat:"spor", logo:"https://royaltv32.com/img/beinsports2.png", stream:"https://justintaraftarium.net/ch?id=b2"},
+  {id:3,  name:"BeIN Sports 3",  cat:"spor", logo:"https://royaltv32.com/img/beinsports3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
+  {id:4,  name:"BeIN Sports 4",  cat:"spor", logo:"https://royaltv32.com/img/beinsports4.png", stream:"https://justintaraftarium.net/ch?id=b4"},
+  {id:5,  name:"BeIN Sports 5",  cat:"spor", logo:"https://royaltv32.com/img/beinsports5.png", stream:"https://justintaraftarium.net/ch?id=b5"},
+  {id:6,  name:"BeIN Max 1",     cat:"spor", logo:"https://royaltv32.com/img/beinsportsmax1.png", stream:"https://justintaraftarium.net/ch?id=bm1"},
+  {id:7,  name:"BeIN Max 2",     cat:"spor", logo:"https://royaltv32.com/img/beinsportsmax2.png", stream:"https://justintaraftarium.net/ch?id=bm2"},
   
-  {id:8,  name:"S Sport 1",      cat:"spor", logo:"https://royaltv31.com/img/ssport1.png", stream:"https://justintaraftarium.net/ch?id=ss"},
-  {id:22, name:"S Sport 1 (Yedek)", cat:"spor", logo:"https://royaltv31.com/img/ssport1.png", stream:"https://54b53072540eeeb8f8e9343e71f28176.biz/705/mono.m3u8"},
-  {id:9,  name:"S Sport 2",      cat:"spor", logo:"https://royaltv31.com/img/ssport2.png", stream:"https://justintaraftarium.net/ch?id=ss2"},
+  {id:8,  name:"S Sport 1",      cat:"spor", logo:"https://royaltv32.com/img/ssport1.png", stream:"https://justintaraftarium.net/ch?id=ss"},
+  {id:22, name:"S Sport 1 (Yedek)", cat:"spor", logo:"https://royaltv32.com/img/ssport1.png", stream:"https://54b53072540eeeb8f8e9343e71f28176.biz/705/mono.m3u8"},
+  {id:9,  name:"S Sport 2",      cat:"spor", logo:"https://royaltv32.com/img/ssport2.png", stream:"https://justintaraftarium.net/ch?id=ss2"},
   
-  {id:10, name:"Tivibu 1",       cat:"spor", logo:"https://royaltv31.com/img/tivibu1.png", stream:"https://justintaraftarium.net/ch?id=t1"},
-  {id:11, name:"Tivibu 2",       cat:"spor", logo:"https://royaltv31.com/img/tivibu2.png", stream:"https://justintaraftarium.net/ch?id=t2"},
-  {id:12, name:"Tivibu 3",       cat:"spor", logo:"https://royaltv31.com/img/tivibu3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
-  {id:13, name:"Tivibu 4",       cat:"spor", logo:"https://royaltv31.com/img/tivibu4.png", stream:"https://justintaraftarium.net/ch?id=t4"},
+  {id:10, name:"Tivibu 1",       cat:"spor", logo:"https://royaltv32.com/img/tivibu1.png", stream:"https://justintaraftarium.net/ch?id=t1"},
+  {id:11, name:"Tivibu 2",       cat:"spor", logo:"https://royaltv32.com/img/tivibu2.png", stream:"https://justintaraftarium.net/ch?id=t2"},
+  {id:12, name:"Tivibu 3",       cat:"spor", logo:"https://royaltv32.com/img/tivibu3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
+  {id:13, name:"Tivibu 4",       cat:"spor", logo:"https://royaltv32.com/img/tivibu4.png", stream:"https://justintaraftarium.net/ch?id=t4"},
   
-  {id:14, name:"Smartspor",      cat:"spor", logo:"https://royaltv31.com/img/smartspor.png", stream:"https://justintaraftarium.net/ch?id=smarts"},
-  {id:15, name:"Smartspor 2",    cat:"spor", logo:"https://royaltv31.com/img/smartspor2.png", stream:"https://justintaraftarium.net/ch?id=sms2"},
+  {id:14, name:"Smartspor",      cat:"spor", logo:"https://royaltv32.com/img/smartspor.png", stream:"https://justintaraftarium.net/ch?id=smarts"},
+  {id:15, name:"Smartspor 2",    cat:"spor", logo:"https://royaltv32.com/img/smartspor2.png", stream:"https://justintaraftarium.net/ch?id=sms2"},
   
-  {id:16, name:"EXXEN",          cat:"spor", logo:"https://royaltv31.com/img/exxen.png", stream:"https://justintaraftarium.net/ch?id=ex1"},
-  {id:17, name:"Tabii Spor",     cat:"spor", logo:"https://royaltv31.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex7"},
-  {id:18, name:"Tabii Spor 2",   cat:"spor", logo:"https://royaltv31.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex2"},
+  {id:16, name:"EXXEN",          cat:"spor", logo:"https://royaltv32.com/img/exxen.png", stream:"https://justintaraftarium.net/ch?id=ex1"},
+  {id:17, name:"Tabii Spor",     cat:"spor", logo:"https://royaltv32.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex7"},
+  {id:18, name:"Tabii Spor 2",   cat:"spor", logo:"https://royaltv32.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex2"},
   
-  {id:19, name:"TRT Spor",       cat:"spor", logo:"https://royaltv31.com/img/trtspornew.png", stream:"https://justintaraftarium.net/ch?id=trtspor"},
-  {id:21, name:"A Spor",         cat:"spor", logo:"https://royaltv31.com/img/aspornew.png", stream:"https://justintaraftarium.net/ch?id=as"},
+  {id:19, name:"TRT Spor",       cat:"spor", logo:"https://royaltv32.com/img/trtspornew.png", stream:"https://justintaraftarium.net/ch?id=trtspor"},
+  {id:21, name:"A Spor",         cat:"spor", logo:"https://royaltv32.com/img/aspornew.png", stream:"https://justintaraftarium.net/ch?id=as"},
 
-  {id:25, name:"TRT 1",          cat:"ulusal", logo:"https://royaltv31.com/img/trt1.png", stream:"https://justintaraftarium.net/ch?id=trt1"},
-  {id:26, name:"ATV",            cat:"ulusal", logo:"https://royaltv31.com/img/atv.png", stream:"https://justintaraftarium.net/ch?id=atv"},
-  {id:27, name:"TV 8",           cat:"ulusal", logo:"https://royaltv31.com/img/tv8.png", stream:"https://justintaraftarium.net/ch?id=tv8"},
-  {id:28, name:"TV 8,5",         cat:"ulusal", logo:"https://royaltv31.com/img/tv85.png", stream:"https://justintaraftarium.net/ch?id=tv85"}
+  {id:25, name:"TRT 1",          cat:"ulusal", logo:"https://royaltv32.com/img/trt1.png", stream:"https://justintaraftarium.net/ch?id=trt1"},
+  {id:26, name:"ATV",            cat:"ulusal", logo:"https://royaltv32.com/img/atv.png", stream:"https://justintaraftarium.net/ch?id=atv"},
+  {id:27, name:"TV 8",           cat:"ulusal", logo:"https://royaltv32.com/img/tv8.png", stream:"https://justintaraftarium.net/ch?id=tv8"},
+  {id:28, name:"TV 8,5",         cat:"ulusal", logo:"https://royaltv32.com/img/tv85.png", stream:"https://justintaraftarium.net/ch?id=tv85"}
 ];
 
 const fallbackLogo = "https://img.icons8.com/fluency/48/television.png";
