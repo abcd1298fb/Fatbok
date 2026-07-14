@@ -680,7 +680,7 @@ function selectChannel(c){
   } else {
     // Token yoksa ya da süresi bittiyse reklam panelini aç
     interstitial.style.display = "flex";
-    document.getElementById('advText').textContent = "Yayın hakları ve sunucu masrafları sebebiyle reklamı geçerek doğrudan orijinal kesintisiz yayına bağlanabilirsiniz.";
+    document.getElementById('advText').textContent = "SADECE 1 REKLAM İZLEYEREK REKLAMSIZ İZLEYEBİLİRSİNİZ.";
     
     const advBtn = document.getElementById('advBtn');
     advBtn.className = "btn-adv-action";
@@ -711,11 +711,11 @@ function handleAdClick() {
 function handleStreamStart() {
   if (!selectedChannelObj) return;
   
-  // Reklam başarıyla geçildi: 24 SAATLİK REKLAMSIZ GEZİNME TOKENI TANIMLA
+  // Reklam başarıyla geçildi: 24 SAATLİK REKLAMSIZ İZLEME TOKENI TANIMLA
   const expireTime = Date.now() + (24 * 60 * 60 * 1000); // 24 Saat
   localStorage.setItem('fatbok_premium_token', expireTime.toString());
 
-  // Arayüzü kapat ve asıl akışı yükle
+  // Arayüzü kapatma asıl yayına geçme
   document.getElementById('advInterstitial').style.display = "none";
   startActualStream(selectedChannelObj);
 }
