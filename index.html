@@ -155,17 +155,49 @@ nav{
   opacity: 0;
   pointer-events: none;
 }
-.ch-sidebar-header{
-  padding:16px;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
+
+/* ÜLKE FİLTRE ALANI */
+.country-filter-wrap{
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  overflow-x: auto;
+  display: flex;
+  gap: 6px;
 }
-.ch-sidebar-header h2{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:16px;font-weight:700;letter-spacing:2px;
-  color:var(--text);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-  text-transform:uppercase;
+.country-filter-wrap::-webkit-scrollbar {
+  height: 3px;
+}
+.country-filter-wrap::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+}
+.country-btn{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.country-btn:hover{
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.country-btn.active{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(0, 122, 255, 0.4);
+}
+.country-btn .flag-icon {
+  font-size: 14px;
 }
 
 .ch-list{
@@ -210,6 +242,20 @@ nav{
 @keyframes appleShimmer {
   0% { left: -150%; }
   100% { left: 150%; }
+}
+
+/* Sol Taraftaki Bayrak Alanı */
+.ch-card-flag {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .ch-logo{
@@ -497,9 +543,8 @@ iframe, video{
 <div class="layout" id="mainLayout">
 
   <div class="ch-sidebar">
-    <div class="ch-sidebar-header">
-      <h2>Kanallar</h2>
-    </div>
+    <!-- Ülke Butonları Alanı (Kanallar başlığı silindi) -->
+    <div class="country-filter-wrap" id="countryFilters"></div>
     
     <div class="ch-list" id="chList"></div>
     
@@ -547,88 +592,135 @@ iframe, video{
 </div>
 
 <script>
-// REKLAM LİNKİ
 const DEFAULT_AD_LINK = "https://ay.live/s7Z7FV";
 
-// ─── KANAL VERİ TABANI ───
+// ─── ÜLKE LİSTESİ (Hepsi seçeneği silindi) ───
+const countries = [
+  { code: "tr", name: "Türkiye", flag: "🇹🇷" },
+  { code: "us", name: "USA", flag: "🇺🇸" },
+  { code: "gb", name: "İngiltere", flag: "🇬🇧" },
+  { code: "fr", name: "Fransa", flag: "🇫🇷" },
+  { code: "au", name: "Avustralya", flag: "🇦🇺" },
+  { code: "de", name: "Almanya", flag: "🇩🇪" },
+  { code: "pt", name: "Portekiz", flag: "🇵🇹" },
+  { code: "hr", name: "Hırvatistan", flag: "🇭🇷" },
+  { code: "pl", name: "Polonya", flag: "🇵🇱" },
+  { code: "rs", name: "Sırbistan", flag: "🇷🇸" },
+  { code: "ca", name: "Kanada", flag: "🇨🇦" },
+  { code: "br", name: "Brezilya", flag: "🇧🇷" },
+  { code: "es", name: "İspanya", flag: "🇪🇸" },
+  { code: "it", name: "İtalya", flag: "🇮🇹" },
+  { code: "bg", name: "Bulgaristan", flag: "🇧🇬" },
+  { code: "gr", name: "Yunanistan", flag: "🇬🇷" },
+  { code: "za", name: "ZA", flag: "🇿🇦" },
+  { code: "dk", name: "Danimarka", flag: "🇩🇰" },
+  { code: "at", name: "Avusturya", flag: "🇦🇹" },
+  { code: "nl", name: "Hollanda", flag: "🇳🇱" }
+];
+
+// ─── KANAL VERİ TABANI (Mevcut listen korunarak cat: "tr" olarak güncellendi) ───
 const channels = [
-  {id:1,  name:"BeIN Sports 1",  cat:"spor", logo:"https://royaltv32.com/img/beinsports1.png", stream:"https://justintaraftarium.net/ch?id=b1"},
-  {id:1,  name:"BeIN Sports 1 B",  cat:"spor", logo:"https://royaltv32.com/img/beinsports1.png", stream:"https://zbahistv63.com/channel.html?id=zirve"},
-  {id:2,  name:"BeIN Sports 1 C",  cat:"spor", logo:"https://royaltv32.com/img/beinsports1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs1.m3u8"},
+  {id:1,  name:"BeIN Sports 1",  cat:"tr", logo:"https://royaltv32.com/img/beinsports1.png", stream:"https://justintaraftarium.net/ch?id=b1"},
+  {id:1,  name:"BeIN Sports 1 B",  cat:"tr", logo:"https://royaltv32.com/img/beinsports1.png", stream:"https://zbahistv63.com/channel.html?id=zirve"},
+  {id:2,  name:"BeIN Sports 1 C",  cat:"tr", logo:"https://royaltv32.com/img/beinsports1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs1.m3u8"},
 
-  {id:3,  name:"BeIN Sports 2",  cat:"spor", logo:"https://royaltv32.com/img/beinsports2.png", stream:"https://justintaraftarium.net/ch?id=b2"},
-  {id:3,  name:"BeIN Sports 2 B",  cat:"spor", logo:"https://royaltv32.com/img/beinsports2.png", stream:"https://zbahistv63.com/channel.html?id=b2"},
-  {id:4,  name:"BeIN Sports 2 C",  cat:"spor", logo:"https://royaltv32.com/img/beinsports2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs2.m3u8"},
-  {id:5,  name:"BeIN Sports 3",  cat:"spor", logo:"https://royaltv32.com/img/beinsports3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
-  {id:6,  name:"BeIN Sports 3 B",  cat:"spor", logo:"https://royaltv32.com/img/beinsports3.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs3.m3u8"},
-  {id:7,  name:"BeIN Sports 4",  cat:"spor", logo:"https://royaltv32.com/img/beinsports4.png", stream:"https://justintaraftarium.net/ch?id=b4"},
-  {id:8,  name:"BeIN Sports 4 B",  cat:"spor", logo:"https://royaltv32.com/img/beinsports4.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs4.m3u8"},
-  {id:9,  name:"BeIN Sports 5",  cat:"spor", logo:"https://royaltv32.com/img/beinsports5.png", stream:"https://justintaraftarium.net/ch?id=b5"},
-  {id:10,  name:"BeIN Sports 5 B",  cat:"spor", logo:"https://royaltv32.com/img/beinsports5.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs5.m3u8"},
-  {id:11,  name:"BeIN Max 1",     cat:"spor", logo:"https://royaltv32.com/img/beinsportsmax1.png", stream:"https://justintaraftarium.net/ch?id=bm1"},
-  {id:12,  name:"BeIN Max 1 B",     cat:"spor", logo:"https://royaltv32.com/img/beinsportsmax1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebsm1.m3u8"},
-  {id:13,  name:"BeIN Max 2",     cat:"spor", logo:"https://royaltv32.com/img/beinsportsmax2.png", stream:"https://justintaraftarium.net/ch?id=bm2"},
-  {id:14,  name:"BeIN Max 2 B",     cat:"spor", logo:"https://royaltv32.com/img/beinsportsmax2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebsm2.m3u8"},
+  {id:3,  name:"BeIN Sports 2",  cat:"tr", logo:"https://royaltv32.com/img/beinsports2.png", stream:"https://justintaraftarium.net/ch?id=b2"},
+  {id:3,  name:"BeIN Sports 2 B",  cat:"tr", logo:"https://royaltv32.com/img/beinsports2.png", stream:"https://zbahistv63.com/channel.html?id=b2"},
+  {id:4,  name:"BeIN Sports 2 C",  cat:"tr", logo:"https://royaltv32.com/img/beinsports2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs2.m3u8"},
+  {id:5,  name:"BeIN Sports 3",  cat:"tr", logo:"https://royaltv32.com/img/beinsports3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
+  {id:6,  name:"BeIN Sports 3 B",  cat:"tr", logo:"https://royaltv32.com/img/beinsports3.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs3.m3u8"},
+  {id:7,  name:"BeIN Sports 4",  cat:"tr", logo:"https://royaltv32.com/img/beinsports4.png", stream:"https://justintaraftarium.net/ch?id=b4"},
+  {id:8,  name:"BeIN Sports 4 B",  cat:"tr", logo:"https://royaltv32.com/img/beinsports4.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs4.m3u8"},
+  {id:9,  name:"BeIN Sports 5",  cat:"tr", logo:"https://royaltv32.com/img/beinsports5.png", stream:"https://justintaraftarium.net/ch?id=b5"},
+  {id:10,  name:"BeIN Sports 5 B",  cat:"tr", logo:"https://royaltv32.com/img/beinsports5.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebs5.m3u8"},
+  {id:11,  name:"BeIN Max 1",     cat:"tr", logo:"https://royaltv32.com/img/beinsportsmax1.png", stream:"https://justintaraftarium.net/ch?id=bm1"},
+  {id:12,  name:"BeIN Max 1 B",     cat:"tr", logo:"https://royaltv32.com/img/beinsportsmax1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebsm1.m3u8"},
+  {id:13,  name:"BeIN Max 2",     cat:"tr", logo:"https://royaltv32.com/img/beinsportsmax2.png", stream:"https://justintaraftarium.net/ch?id=bm2"},
+  {id:14,  name:"BeIN Max 2 B",     cat:"tr", logo:"https://royaltv32.com/img/beinsportsmax2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivebsm2.m3u8"},
   
-  {id:15,  name:"S Sport 1",      cat:"spor", logo:"https://royaltv32.com/img/ssport1.png", stream:"https://justintaraftarium.net/ch?id=ss"},
-  {id:16, name:"S Sport 1 B", cat:"spor", logo:"https://royaltv32.com/img/ssport1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivess1.m3u8"},
-  {id:17,  name:"S Sport 2",      cat:"spor", logo:"https://royaltv32.com/img/ssport2.png", stream:"https://justintaraftarium.net/ch?id=ss2"},
-  {id:18,  name:"S Sport 2 B",      cat:"spor", logo:"https://royaltv32.com/img/ssport2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivess2.m3u8"},
+  {id:15,  name:"S Sport 1",      cat:"tr", logo:"https://royaltv32.com/img/ssport1.png", stream:"https://justintaraftarium.net/ch?id=ss"},
+  {id:16, name:"S Sport 1 B", cat:"tr", logo:"https://royaltv32.com/img/ssport1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivess1.m3u8"},
+  {id:17,  name:"S Sport 2",      cat:"tr", logo:"https://royaltv32.com/img/ssport2.png", stream:"https://justintaraftarium.net/ch?id=ss2"},
+  {id:18,  name:"S Sport 2 B",      cat:"tr", logo:"https://royaltv32.com/img/ssport2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivess2.m3u8"},
 
-  {id:19, name:"Tivibu 1",       cat:"spor", logo:"https://royaltv32.com/img/tivibu1.png", stream:"https://justintaraftarium.net/ch?id=t1"},
-  {id:20, name:"Tivibu 1 B",       cat:"spor", logo:"https://royaltv32.com/img/tivibu1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets1.m3u8"},
-  {id:21, name:"Tivibu 2",       cat:"spor", logo:"https://royaltv32.com/img/tivibu2.png", stream:"https://justintaraftarium.net/ch?id=t2"},
-  {id:22, name:"Tivibu 2 B",       cat:"spor", logo:"https://royaltv32.com/img/tivibu2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets2.m3u8"},
-  {id:23, name:"Tivibu 3",       cat:"spor", logo:"https://royaltv32.com/img/tivibu3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
-  {id:24, name:"Tivibu 3 B",       cat:"spor", logo:"https://royaltv32.com/img/tivibu3.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets3.m3u8"},
-  {id:25, name:"Tivibu 4",       cat:"spor", logo:"https://royaltv32.com/img/tivibu4.png", stream:"https://justintaraftarium.net/ch?id=t4"},
-  {id:26, name:"Tivibu 4 B",       cat:"spor", logo:"https://royaltv32.com/img/tivibu4.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets4.m3u8"},
+  {id:19, name:"Tivibu 1",       cat:"tr", logo:"https://royaltv32.com/img/tivibu1.png", stream:"https://justintaraftarium.net/ch?id=t1"},
+  {id:20, name:"Tivibu 1 B",       cat:"tr", logo:"https://royaltv32.com/img/tivibu1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets1.m3u8"},
+  {id:21, name:"Tivibu 2",       cat:"tr", logo:"https://royaltv32.com/img/tivibu2.png", stream:"https://justintaraftarium.net/ch?id=t2"},
+  {id:22, name:"Tivibu 2 B",       cat:"tr", logo:"https://royaltv32.com/img/tivibu2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets2.m3u8"},
+  {id:23, name:"Tivibu 3",       cat:"tr", logo:"https://royaltv32.com/img/tivibu3.png", stream:"https://justintaraftarium.net/ch?id=b3"},
+  {id:24, name:"Tivibu 3 B",       cat:"tr", logo:"https://royaltv32.com/img/tivibu3.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets3.m3u8"},
+  {id:25, name:"Tivibu 4",       cat:"tr", logo:"https://royaltv32.com/img/tivibu4.png", stream:"https://justintaraftarium.net/ch?id=t4"},
+  {id:26, name:"Tivibu 4 B",       cat:"tr", logo:"https://royaltv32.com/img/tivibu4.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets4.m3u8"},
   
-  {id:27, name:"Smartspor",      cat:"spor", logo:"https://royaltv32.com/img/smartspor.png", stream:"https://justintaraftarium.net/ch?id=smarts"},
-  {id:28, name:"Smartspor B",      cat:"spor", logo:"https://royaltv32.com/img/smartspor.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivesm1.m3u8"},
-  {id:29, name:"Smartspor 2",    cat:"spor", logo:"https://royaltv32.com/img/smartspor2.png", stream:"https://justintaraftarium.net/ch?id=sms2"},
-  {id:30, name:"Smartspor 2 B",    cat:"spor", logo:"https://royaltv32.com/img/smartspor2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivesm2.m3u8"},
+  {id:27, name:"Smartspor",      cat:"tr", logo:"https://royaltv32.com/img/smartspor.png", stream:"https://justintaraftarium.net/ch?id=smarts"},
+  {id:28, name:"Smartspor B",      cat:"tr", logo:"https://royaltv32.com/img/smartspor.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivesm1.m3u8"},
+  {id:29, name:"Smartspor 2",    cat:"tr", logo:"https://royaltv32.com/img/smartspor2.png", stream:"https://justintaraftarium.net/ch?id=sms2"},
+  {id:30, name:"Smartspor 2 B",    cat:"tr", logo:"https://royaltv32.com/img/smartspor2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivesm2.m3u8"},
   
-  {id:16, name:"EXXEN",          cat:"spor", logo:"https://royaltv32.com/img/exxen.png", stream:"https://justintaraftarium.net/ch?id=ex1"},
-  {id:17, name:"Tabii Spor",     cat:"spor", logo:"https://royaltv32.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex7"},
-  {id:18, name:"Tabii Spor 2",   cat:"spor", logo:"https://royaltv32.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex2"},
+  {id:16, name:"EXXEN",          cat:"tr", logo:"https://royaltv32.com/img/exxen.png", stream:"https://justintaraftarium.net/ch?id=ex1"},
+  {id:17, name:"Tabii Spor",     cat:"tr", logo:"https://royaltv32.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex7"},
+  {id:18, name:"Tabii Spor 2",   cat:"tr", logo:"https://royaltv32.com/img/tabii.png", stream:"https://justintaraftarium.net/ch?id=ex2"},
   
-  {id:19, name:"TRT Spor",       cat:"spor", logo:"https://royaltv32.com/img/trtspornew.png", stream:"https://justintaraftarium.net/ch?id=trtspor"},
-  {id:21, name:"A Spor",         cat:"spor", logo:"https://royaltv32.com/img/aspornew.png", stream:"https://justintaraftarium.net/ch?id=as"},
+  {id:19, name:"TRT Spor",       cat:"tr", logo:"https://royaltv32.com/img/trtspornew.png", stream:"https://justintaraftarium.net/ch?id=trtspor"},
+  {id:21, name:"A Spor",         cat:"tr", logo:"https://royaltv32.com/img/aspornew.png", stream:"https://justintaraftarium.net/ch?id=as"},
 
-  {id:25, name:"TRT 1",          cat:"ulusal", logo:"https://royaltv32.com/img/trt1.png", stream:"https://justintaraftarium.net/ch?id=trt1"},
-  {id:26, name:"ATV",            cat:"ulusal", logo:"https://royaltv32.com/img/atv.png", stream:"https://justintaraftarium.net/ch?id=atv"},
-  {id:27, name:"TV 8",           cat:"ulusal", logo:"https://royaltv32.com/img/tv8.png", stream:"https://justintaraftarium.net/ch?id=tv8"},
-  {id:28, name:"TV 8,5",         cat:"ulusal", logo:"https://royaltv32.com/img/tv85.png", stream:"https://justintaraftarium.net/ch?id=tv85"}
+  {id:25, name:"TRT 1",          cat:"tr", logo:"https://royaltv32.com/img/trt1.png", stream:"https://justintaraftarium.net/ch?id=trt1"},
+  {id:26, name:"ATV",            cat:"tr", logo:"https://royaltv32.com/img/atv.png", stream:"https://justintaraftarium.net/ch?id=atv"},
+  {id:27, name:"TV 8",           cat:"tr", logo:"https://royaltv32.com/img/tv8.png", stream:"https://justintaraftarium.net/ch?id=tv8"},
+  {id:28, name:"TV 8,5",         cat:"tr", logo:"https://royaltv32.com/img/tv85.png", stream:"https://justintaraftarium.net/ch?id=tv85"}
 ];
 
 const fallbackLogo = "https://img.icons8.com/fluency/48/television.png";
 
+let currentCategory = 'tr'; // İlk açılışta Türkiye kanalları seçili gelsin
 let currentSearch = '';
 let activeId = null;
 let ambientInterval = null;
 let hlsInstance = null;
 let selectedChannelObj = null;
 
+function renderCountryFilters() {
+  const container = document.getElementById('countryFilters');
+  container.innerHTML = '';
+  
+  countries.forEach(country => {
+    const btn = document.createElement('button');
+    btn.className = `country-btn ${currentCategory === country.code ? 'active' : ''}`;
+    btn.innerHTML = `<span class="flag-icon">${country.flag}</span> ${country.name}`;
+    btn.onclick = () => {
+      currentCategory = country.code;
+      renderCountryFilters();
+      renderList(true);
+    };
+    container.appendChild(btn);
+  });
+}
+
 function renderList(triggerShimmer = false){
   const list = document.getElementById('chList');
   let filtered = channels.filter(c=>{
-    return !currentSearch || c.name.toLowerCase().includes(currentSearch.toLowerCase());
+    const matchesCategory = (c.cat === currentCategory);
+    const matchesSearch = (!currentSearch || c.name.toLowerCase().includes(currentSearch.toLowerCase()));
+    return matchesCategory && matchesSearch;
   });
 
   list.innerHTML='';
   
   filtered.forEach(c=>{
+    const countryObj = countries.find(item => item.code === c.cat);
+    const flagSymbol = countryObj ? countryObj.flag : "🌐";
+
     const card=document.createElement('div');
     card.className='ch-card'+(activeId===c.id?' active':'') + (triggerShimmer ? ' shimmering' : '');
     card.innerHTML=`
+      <div class="ch-card-flag">${flagSymbol}</div>
       <div class="ch-logo">
         <img src="${c.logo}" alt="${c.name}" onerror="this.onerror=null; this.src='${fallbackLogo}';"/>
       </div>
       <div class="ch-info">
         <div class="ch-name">${c.name}</div>
       </div>
-      ${c.cat=='spor'?'<div class="ch-live-badge"></div>':''}
+      <div class="ch-live-badge"></div>
     `;
     card.onclick=()=>selectChannel(c);
     list.appendChild(card);
@@ -724,24 +816,16 @@ function startActualStream(c) {
   }
 }
 
-function startAmbientMode(category) {
+function startAmbientMode(cat) {
   if (ambientInterval) clearInterval(ambientInterval);
   const glowEl = document.getElementById('ambientGlow');
   
-  const sporColors = [
-    "rgba(52, 199, 89, 0.28)",
-    "rgba(0, 122, 255, 0.35)",
-    "rgba(46, 117, 89, 0.25)",
-    "rgba(255, 255, 255, 0.12)"
-  ];
+  const colors = {
+    tr: ["rgba(235, 9, 9, 0.25)", "rgba(255, 255, 255, 0.12)"],
+    us: ["rgba(0, 34, 150, 0.3)", "rgba(220, 20, 60, 0.25)"]
+  };
   
-  const ulusalColors = [
-    "rgba(0, 122, 255, 0.35)",
-    "rgba(255, 255, 255, 0.15)",
-    "rgba(0, 85, 255, 0.25)"
-  ];
-
-  const targetColors = category === 'spor' ? sporColors : ulusalColors;
+  const targetColors = colors[cat] || ["rgba(0, 122, 255, 0.35)", "rgba(255, 255, 255, 0.15)"];
   let index = 0;
 
   glowEl.style.setProperty('--ambient-glow-color', targetColors[index]);
@@ -772,6 +856,8 @@ function filterChannels(q){
   renderList(true);
 }
 
+// Başlangıç Çalıştırmaları
+renderCountryFilters();
 renderList(true);
 </script>
 </body>
