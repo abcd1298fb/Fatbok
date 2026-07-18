@@ -166,20 +166,7 @@ nav{
   color:var(--text);
   text-shadow: 0 2px 4px rgba(0,0,0,0.4);
   text-transform:uppercase;
-  margin-bottom:12px;
 }
-.cat-tabs{
-  display:flex;gap:6px;flex-wrap:wrap;
-}
-.cat-tab{
-  padding:5px 12px;border-radius:6px;
-  font-size:11px;font-weight:700;letter-spacing:.5px;
-  background: rgba(255, 255, 255, 0.05);
-  border:1px solid var(--border);
-  color:var(--text);cursor:pointer;transition:all .2s;
-}
-.cat-tab:hover{color:var(--text);border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.15)}
-.cat-tab.active{background:var(--accent);border-color:var(--accent);color:#ffffff;box-shadow: 0 4px 15px rgba(0,122,255,0.45);}
 
 .ch-list{
   flex:1;overflow-y:auto;padding:8px;
@@ -512,11 +499,6 @@ iframe, video{
   <div class="ch-sidebar">
     <div class="ch-sidebar-header">
       <h2>Kanallar</h2>
-      <div class="cat-tabs">
-        <button class="cat-tab active" onclick="filterCat(this,'all')">Tümü</button>
-        <button class="cat-tab" onclick="filterCat(this,'spor')">⚽ Spor</button>
-        <button class="cat-tab" onclick="filterCat(this,'ulusal')">📺 Ulusal</button>
-      </div>
     </div>
     
     <div class="ch-list" id="chList"></div>
@@ -593,7 +575,6 @@ const channels = [
   {id:17,  name:"S Sport 2",      cat:"spor", logo:"https://royaltv32.com/img/ssport2.png", stream:"https://justintaraftarium.net/ch?id=ss2"},
   {id:18,  name:"S Sport 2 B",      cat:"spor", logo:"https://royaltv32.com/img/ssport2.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivess2.m3u8"},
 
-  
   {id:19, name:"Tivibu 1",       cat:"spor", logo:"https://royaltv32.com/img/tivibu1.png", stream:"https://justintaraftarium.net/ch?id=t1"},
   {id:20, name:"Tivibu 1 B",       cat:"spor", logo:"https://royaltv32.com/img/tivibu1.png", stream:"https://andro.evrenesoglu57.click/checklist/androstreamlivets1.m3u8"},
   {id:21, name:"Tivibu 2",       cat:"spor", logo:"https://royaltv32.com/img/tivibu2.png", stream:"https://justintaraftarium.net/ch?id=t2"},
@@ -623,7 +604,6 @@ const channels = [
 
 const fallbackLogo = "https://img.icons8.com/fluency/48/television.png";
 
-let currentCat = 'all';
 let currentSearch = '';
 let activeId = null;
 let ambientInterval = null;
@@ -633,9 +613,7 @@ let selectedChannelObj = null;
 function renderList(triggerShimmer = false){
   const list = document.getElementById('chList');
   let filtered = channels.filter(c=>{
-    const catOk = currentCat==='all' || c.cat===currentCat;
-    const searchOk = !currentSearch || c.name.toLowerCase().includes(currentSearch.toLowerCase());
-    return catOk && searchOk;
+    return !currentSearch || c.name.toLowerCase().includes(currentSearch.toLowerCase());
   });
 
   list.innerHTML='';
@@ -650,7 +628,7 @@ function renderList(triggerShimmer = false){
       <div class="ch-info">
         <div class="ch-name">${c.name}</div>
       </div>
-      ${c.cat==='spor'?'<div class="ch-live-badge"></div>':''}
+      ${c.cat=='spor'?'<div class="ch-live-badge"></div>':''}
     `;
     card.onclick=()=>selectChannel(c);
     list.appendChild(card);
@@ -677,7 +655,6 @@ function selectChannel(c){
   const hlsPlayer = document.getElementById('hlsPlayer');
   const interstitial = document.getElementById('advInterstitial');
 
-  // Player'ları sıfırla
   if (hlsInstance) {
     hlsInstance.destroy();
     hlsInstance = null;
@@ -688,15 +665,12 @@ function selectChannel(c){
   iframePlayer.style.display = "none";
   iframePlayer.src = "";
 
-  // TOKEN KONTROLÜ (24 saatlik süre limiti ile tek seferlik reklam)
   const tokenExpire = localStorage.getItem('fatbok_premium_token');
   
   if (tokenExpire && parseInt(tokenExpire) > Date.now()) {
-    // Eğer geçerli token varsa reklam sorma, direkt yayını başlat
     interstitial.style.display = "none";
     startActualStream(c);
   } else {
-    // Token yoksa ya da süresi bittiyse reklam panelini aç
     interstitial.style.display = "flex";
     document.getElementById('advText').textContent = "SADECE 1 REKLAM İZLEYEREK REKLAMSIZ İZLEYEBİLİRSİNİZ.";
     
@@ -711,13 +685,9 @@ function selectChannel(c){
 
 function handleAdClick() {
   if (!selectedChannelObj) return;
-  
-  // Hedef reklam linkini seç
   const targetAdLink = selectedChannelObj.adLink ? selectedChannelObj.adLink : DEFAULT_AD_LINK;
-  
   window.open(targetAdLink, '_blank');
 
-  // Arayüzü "Yayını Başlat" aşamasına geçir
   const advBtn = document.getElementById('advBtn');
   document.getElementById('advText').textContent = "Reklamı yan sekmede açtık. Reklamı geçtikten sonra aşağıdaki butona tıklayarak yayını başlatabilirsiniz.";
   
@@ -728,12 +698,9 @@ function handleAdClick() {
 
 function handleStreamStart() {
   if (!selectedChannelObj) return;
-  
-  // Reklam başarıyla geçildi: 24 SAATLİK REKLAMSIZ İZLEME TOKENI TANIMLA
-  const expireTime = Date.now() + (24 * 60 * 60 * 1000); // 24 Saat
+  const expireTime = Date.now() + (24 * 60 * 60 * 1000);
   localStorage.setItem('fatbok_premium_token', expireTime.toString());
 
-  // Arayüzü kapatma asıl yayına geçme
   document.getElementById('advInterstitial').style.display = "none";
   startActualStream(selectedChannelObj);
 }
@@ -800,12 +767,6 @@ function toggleTheaterMode() {
   }
 }
 
-function filterCat(btn, cat){
-  currentCat=cat;
-  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderList(true);
-}
 function filterChannels(q){
   currentSearch=q;
   renderList(true);
