@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<!-- Plyr Player CSS ve JS Kütüphaneleri -->
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -23,6 +26,10 @@
   --muted:#7ba1d5;
   --muted2:#94a3b8;
   --ambient-glow-color: rgba(0, 122, 255, 0.45);
+  
+  /* Plyr Renk Ayarlarını Sitenin Temasına Uydurma */
+  --plyr-color-main: var(--accent);
+  --plyr-video-background: #000000;
 }
 html{scroll-behavior:smooth}
 body{
@@ -406,7 +413,7 @@ nav{
   box-shadow: inset 0 0 60px rgba(0,0,0,0.95);
   z-index:5;
 }
-iframe, video{
+iframe, .plyr-container-box{
   width:100%;
   height:100%;
   border:none;
@@ -419,6 +426,15 @@ iframe, video{
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   z-index:10;
+}
+
+/* Plyr Kapsayıcı Tasarım Düzeltmesi */
+.plyr {
+  height: 100% !important;
+  width: 100% !important;
+}
+.plyr__video-wrapper {
+  height: 100% !important;
 }
 
 /* ─── REKLAM GEÇİŞ ALANI ─── */
@@ -585,7 +601,11 @@ iframe, video{
       </div>
 
       <iframe id="embedPlayer" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-      <video id="hlsPlayer" controls autoplay playsinline></video>
+      
+      <!-- Plyr için kapsayıcı div yapısı -->
+      <div id="plyrWrapper" class="plyr-container-box">
+        <video id="hlsPlayer" controls autoplay playsinline></video>
+      </div>
     </div>
   </div>
 
@@ -666,21 +686,32 @@ const channels = [
 
   {id:25, name:"TRT 1",          cat:"tr", logo:"https://royaltv32.com/img/trt1.png", stream:"https://justintaraftarium.net/ch?id=trt1"},
   {id:26, name:"ATV",            cat:"tr", logo:"https://royaltv32.com/img/atv.png", stream:"https://justintaraftarium.net/ch?id=atv"},
-  {id:27, name:"TV 8",           cat:"tr", logo:"https://royaltv32.com/img/tv8.png", stream:"https://justintaraftarium.net/ch?id=tv8"},
+  {id:27, name:"TV 8",    cat:"tr", logo:"https://royaltv32.com/img/tv8.png", stream:"https://justintaraftarium.net/ch?id=tv8"},
   {id:28, name:"TV 8,5",         cat:"tr", logo:"https://royaltv32.com/img/tv85.png", stream:"https://justintaraftarium.net/ch?id=tv85"},
   {id:29, name:"ABC",         cat:"us", logo:"📺", stream:"https://cdnlivetv.tv/secure/api/v1/6a288d2781d8192bb76cb354/playlist.m3u8?token=NmEyODhkMjc4MWQ4MTkyYmI3NmNiMzU0OjE3ODQ0NzI5MTgwMzk6Y2RubGl2ZXR2LnR2OmU5ZTk1YmE0ODc3MGRkM2YuZjI1M2MwYjNmNzJlNDVjYWZhOTc4NDY5MDg1NjE3ODFiNjIwODhiYTlkOTVhNDFiNTQ0NDRmMWI5YzMwNmNmOQ"},
   {id:30, name:"ACC NETWORK",         cat:"us", logo:"📺", stream:"https://cdnlivetv.tv/secure/api/v1/6a288d2781d8192bb76cb355/playlist.m3u8?token=NmEyODhkMjc4MWQ4MTkyYmI3NmNiMzU1OjE3ODQ0NzMxNTU4MTU6Y2RubGl2ZXR2LnR2Ojc1MDJkMWI2M2UwZjcxYjAuMjc2NTM1M2FlNzY2MDM5MDJhYjE4ZmFhZjZkYzhjMjMzN2Y0OGUxY2FlNWM0ZDIxMzhiYTBhN2FmNGE0Mzg2Yw"},
-  {id:31, name:"ALTITUDE",         cat:"us", logo:"📺", stream:"https://cdnlivetv.tv/secure/api/v1/6a288d2881d8192bb76cb57f/playlist.m3u8?token=NmEyODhkMjg4MWQ4MTkyYmI3NmNiNTdmOjE3ODQ0NzMxNjcyMzQ6Y2RubGl2ZXR2LnR2OjEyZjFiNjkwYmJkNjk5ZGEuYmI2MDQwYTkyMjkwYTgyZTE0OGYxNDRmZTgyNzVmY2QxMzcyZjEzY2I2MmEwZWJkOTE5MDc2ZjU0NGQ1YzZmZQ"}
-  ];
+  {id:31, name:"ALTITUDE",         cat:"us", logo:"📺", stream:"https://cdnlivetv.tv/secure/api/v1/6a288d2881d8192bb76cb57f/playlist.m3u8?token=NmEyODhkMjg4MWQ4MTkyYmI3NmNiNTdmOjE3ODQ0NzQzMzczMTg6Y2RubGl2ZXR2LnR2OjZmNDRlODgzYWQ1OGZmOGMuZjkwODg5YTQ0NzhiNjgxNzY2OWEyMzFkYmUxNTU5YzE5OTU5MWVlMWFjYmZhNzE3MDYyZmUyODEzZjhiNDQzMA"}
+];
 
 const fallbackLogo = "https://img.icons8.com/fluency/48/television.png";
 
-let currentCategory = 'tr'; // İlk açılışta Türkiye kanalları seçili gelsin
+let currentCategory = 'tr'; 
 let currentSearch = '';
 let activeId = null;
 let ambientInterval = null;
 let hlsInstance = null;
 let selectedChannelObj = null;
+let plyrInstance = null; // Plyr referansı
+
+// Plyr Oynatıcıyı Başlatma Fonksiyonu
+function initPlyr() {
+  if (!plyrInstance) {
+    plyrInstance = new Plyr('#hlsPlayer', {
+      controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+      tooltips: { controls: true, seek: true }
+    });
+  }
+}
 
 function renderCountryFilters() {
   const container = document.getElementById('countryFilters');
@@ -747,6 +778,7 @@ function selectChannel(c){
   document.getElementById('vidOverlay').style.display = 'none';
   
   const iframePlayer = document.getElementById('embedPlayer');
+  const plyrWrapper = document.getElementById('plyrWrapper');
   const hlsPlayer = document.getElementById('hlsPlayer');
   const interstitial = document.getElementById('advInterstitial');
 
@@ -754,9 +786,10 @@ function selectChannel(c){
     hlsInstance.destroy();
     hlsInstance = null;
   }
+  
   hlsPlayer.pause();
   hlsPlayer.src = "";
-  hlsPlayer.style.display = "none";
+  plyrWrapper.style.display = "none";
   iframePlayer.style.display = "none";
   iframePlayer.src = "";
 
@@ -802,16 +835,23 @@ function handleStreamStart() {
 
 function startActualStream(c) {
   const iframePlayer = document.getElementById('embedPlayer');
+  const plyrWrapper = document.getElementById('plyrWrapper');
   const hlsPlayer = document.getElementById('hlsPlayer');
 
   if (c.stream.includes('.m3u8')) {
-    hlsPlayer.style.display = "block";
+    plyrWrapper.style.display = "block";
+    initPlyr(); // Plyr hazır değilse oluşturuluyor
+    
     if (Hls.isSupported()) {
       hlsInstance = new Hls();
       hlsInstance.loadSource(c.stream);
       hlsInstance.attachMedia(hlsPlayer);
+      hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
+        hlsPlayer.play();
+      });
     } else if (hlsPlayer.canPlayType('application/vnd.apple.mpegurl')) {
       hlsPlayer.src = c.stream;
+      hlsPlayer.play();
     }
   } else {
     iframePlayer.style.display = "block";
