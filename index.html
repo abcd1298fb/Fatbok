@@ -829,6 +829,7 @@ function startActualStream(c) {
   const hlsPlayer = document.getElementById('hlsPlayer');
 
   if (c.stream.includes('.m3u8')) {
+    iframePlayer.removeAttribute('sandbox');
     plyrWrapper.style.display = "block";
     initPlyr(); // Plyr hazır değilse oluşturuluyor
     
@@ -844,6 +845,8 @@ function startActualStream(c) {
       hlsPlayer.play();
     }
   } else {
+    // İframe yayınları için reklam engelleyici sandbox ekleniyor
+    iframePlayer.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
     iframePlayer.style.display = "block";
     iframePlayer.src = c.stream; 
   }
