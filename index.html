@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>FATBOK</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <!-- Plyr Player CSS JS-->
 <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
@@ -109,6 +109,12 @@ nav{
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   white-space:nowrap;flex-shrink:0;
   width: 150px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s;
+}
+.nav-logo:active {
+  transform: scale(0.95);
 }
 .nav-search{
   flex:1;
@@ -134,7 +140,109 @@ nav{
 .live-dot{width:7px;height:7px;background:#34c759;border-radius:50%;animation:blink 1s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 
-/* ─── ANIMATION ─── */
+/* ─── NETFLIX STYLE INTRO OVERLAY (GÜNCELLENDİ) ─── */
+.netflix-intro-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: #000000;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  overflow: hidden;
+}
+.netflix-intro-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.intro-text-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(60px, 15vw, 180px);
+  font-weight: 900;
+  letter-spacing: 4px;
+}
+
+.intro-f {
+  color: #007aff;
+  background: linear-gradient(180deg, #ffffff 10%, #007aff 70%, #002288 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  transform-origin: center center;
+  z-index: 2;
+}
+
+.intro-rest {
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 30%, #a0a0a0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: bottom;
+  transform-origin: left center;
+}
+
+/* 5 Saniyelik Sinematik Animasyon */
+.netflix-intro-overlay.active .intro-rest {
+  animation: fadeOutRest 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.netflix-intro-overlay.active .intro-f {
+  animation: zoomF 5s cubic-bezier(0.25, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeOutRest {
+  0% { 
+    opacity: 1; 
+    max-width: 500px;
+    filter: blur(0px); 
+  }
+  50% { 
+    opacity: 0.5; 
+    filter: blur(4px); 
+  }
+  100% { 
+    opacity: 0; 
+    max-width: 0px; 
+    filter: blur(12px); 
+  }
+}
+
+@keyframes zoomF {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px rgba(0, 122, 255, 0.3));
+  }
+  35% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 30px rgba(0, 122, 255, 0.8));
+  }
+  65% {
+    transform: scale(4);
+    opacity: 1;
+    filter: drop-shadow(0 0 60px rgba(0, 122, 255, 1));
+  }
+  92% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(75);
+    opacity: 0;
+    filter: blur(15px) drop-shadow(0 0 100px rgba(0, 122, 255, 1));
+  }
+}
+
+/* ─── LAYOUT ─── */
 .layout{
   display:grid;
   grid-template-columns:320px 1fr;
@@ -545,10 +653,17 @@ iframe, .plyr-container-box{
 </head>
 <body>
 
+<!-- NETFLIX STYLE ANIMATION OVERLAY (5 SANIYE) -->
+<div class="netflix-intro-overlay" id="netflixIntro">
+  <div class="intro-text-box">
+    <span class="intro-f">F</span><span class="intro-rest">ATBOK</span>
+  </div>
+</div>
+
 <div class="liquid-bg"></div>
 
 <nav>
-  <div class="nav-logo">FATBOK</div>
+  <div class="nav-logo" onclick="triggerNetflixIntro()">FATBOK</div>
   <div class="nav-search">
     <span class="search-icon">🔍</span>
     <input type="text" placeholder="Kanal ara..." id="searchInput" oninput="filterChannels(this.value)"/>
@@ -613,6 +728,17 @@ iframe, .plyr-container-box{
 
 <script>
 const DEFAULT_AD_LINK = "https://ay.live/s7Z7FV";
+
+// ─── LOGO TIKLANDIĞINDA 5 SANİYELİK NETFLIX ZOOM EFEKTİ ───
+function triggerNetflixIntro() {
+  const overlay = document.getElementById('netflixIntro');
+  overlay.classList.add('active');
+  
+  // Tam 5 saniye sonra yeniler
+  setTimeout(() => {
+    location.reload();
+  }, 5000); 
+}
 
 // ─── COUNTRY LİST ───
 const countries = [
@@ -704,7 +830,7 @@ const channels = [
   {id:72, name:"TNT SPORTS 4", cat:"gb", logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWliuUCTlNnBS6Sxd_ate5ZZSHTxPHzRj7FAtkx5WWx0uPqICyZKGgKpg&s=10", stream:"https://dlhd.st/stream/stream-34.php"},
   {id:73, name:"VIAPLAY SPORTS 1", cat:"gb", logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWliuUCTlNnBS6Sxd_ate5ZZSHTxPHzRj7FAtkx5WWx0uPqICyZKGgKpg&s=10", stream:"https://dlhd.st/stream/stream-451.php"},
   {id:74, name:"VIAPLAY SPORTS 2", cat:"gb", logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWliuUCTlNnBS6Sxd_ate5ZZSHTxPHzRj7FAtkx5WWx0uPqICyZKGgKpg&s=10", stream:"https://dlhd.st/stream/stream-550.php"}
-  ];
+];
   
 
 const fallbackLogo = "https://img.icons8.com/fluency/48/television.png";
@@ -715,9 +841,8 @@ let activeId = null;
 let ambientInterval = null;
 let hlsInstance = null;
 let selectedChannelObj = null;
-let plyrInstance = null; // Plyr referansı
+let plyrInstance = null;
 
-// Plyr Oynatıcıyı Başlatma Fonksiyonu
 function initPlyr() {
   if (!plyrInstance) {
     plyrInstance = new Plyr('#hlsPlayer', {
@@ -855,7 +980,7 @@ function startActualStream(c) {
   if (c.stream.includes('.m3u8')) {
     iframePlayer.removeAttribute('sandbox');
     plyrWrapper.style.display = "block";
-    initPlyr(); // Plyr hazır değilse oluşturuluyor
+    initPlyr(); 
     
     if (Hls.isSupported()) {
       hlsInstance = new Hls();
@@ -869,7 +994,6 @@ function startActualStream(c) {
       hlsPlayer.play();
     }
   } else {
-    // İframe yayınları için reklam engelleyici sandbox ekleniyor
     iframePlayer.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
     iframePlayer.style.display = "block";
     iframePlayer.src = c.stream; 
