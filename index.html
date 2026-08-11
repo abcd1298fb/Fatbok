@@ -122,7 +122,7 @@ nav{
 .nav-spacer { width: 150px; flex-shrink: 0; display: flex; justify-content: flex-end; align-items: center; }
 .live-dot{width:7px;height:7px;background:#34c759;border-radius:50%;opacity:0.9;}
 
-/* Renk Tema Seçici */
+/* Renk Tema Seçici CSS */
 .theme-picker-wrap {
   display: flex;
   align-items: center;
@@ -250,6 +250,7 @@ nav{
   box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
   contain: layout style;
+  height: 100%;
 }
 .layout.theater-active .ch-sidebar {
   transform: translateX(-320px);
@@ -291,7 +292,7 @@ nav{
 }
 .country-btn .flag-icon { font-size: 14px; }
 
-/* Sekmeler Kanallar / Maçlar */
+/* Sekmeler (Kanallar / Maçlar) */
 .main-tabs-wrap {
   display: flex;
   background: rgba(0,0,0,0.3);
@@ -502,7 +503,7 @@ nav{
   background: var(--accent-glow);
 }
 
-/* ─── PLAYER AREA & CHAT YAPISI ─── */
+/* ─── PLAYER AREA & CHAT FLEX YAPISI ─── */
 .player-area{
   display:flex;flex-direction:column;
   overflow:hidden;
@@ -530,7 +531,7 @@ nav{
   transition: all 0.3s ease;
 }
 
-/* ─── CHAT PANELİ ─── */
+/* ─── ÖZEL CHAT PANELİ ─── */
 .chat-sidebar-panel {
   width: 280px;
   background: rgba(6, 10, 22, 0.95);
@@ -770,7 +771,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 @media(max-width:768px){
   .layout{ grid-template-columns:1fr; grid-template-rows: auto 1fr; height: calc(100vh - 58px); }
   .layout.theater-active { grid-template-columns: 1fr; grid-template-rows: calc(100vh - 58px) 0px; }
-  .ch-sidebar{ max-height: 42vh; border-right:none; order:2; }
+  .ch-sidebar{ flex: 1; height: auto; max-height: none; border-right:none; order:2; }
   .layout.theater-active .ch-sidebar { transform: translateY(100%); max-height: 0px; opacity: 0; padding: 0; }
   .player-area{ order:1; height: auto; }
   nav{padding:0 14px}
@@ -795,7 +796,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
   <div class="intro-text-box">
     <div class="f-wrapper">
       <span class="intro-f">F</span>
-    </div><span class="intro-rest">ATBOK</span>
+    </div><span class="intro-rest">FATBOK</span>
   </div>
 </div>
 
@@ -849,7 +850,6 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
       <div class="now-logo" id="nowLogo"></div>
       <div class="now-info">
         <div class="now-ch-name" id="nowName"></div>
-        <!-- Sinema Modu ve Sohbet Butonları Yan Yana -->
         <button class="btn-theater" id="theaterBtn" onclick="toggleTheaterMode()" style="display:none;">
           <span>⛶</span><span class="btn-text">Sinema</span>
         </button>
@@ -916,7 +916,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 </div>
 
 <script>
-// Sohbet Sunucu Bağlantısı
+// Render Canlı Sohbet Sunucu Bağlantısı
 const socket = io('https://fatbokchat.onrender.com');
 
 socket.on('chatMessage', (data) => {
