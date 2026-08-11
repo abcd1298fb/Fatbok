@@ -122,7 +122,7 @@ nav{
 .nav-spacer { width: 150px; flex-shrink: 0; display: flex; justify-content: flex-end; align-items: center; }
 .live-dot{width:7px;height:7px;background:#34c759;border-radius:50%;opacity:0.9;}
 
-/* Renk Tema Seçici CSS */
+/* Renk Tema Seçici */
 .theme-picker-wrap {
   display: flex;
   align-items: center;
@@ -291,7 +291,7 @@ nav{
 }
 .country-btn .flag-icon { font-size: 14px; }
 
-/* Sekmeler (Kanallar / Maçlar) */
+/* Sekmeler Kanallar / Maçlar */
 .main-tabs-wrap {
   display: flex;
   background: rgba(0,0,0,0.3);
@@ -502,7 +502,7 @@ nav{
   background: var(--accent-glow);
 }
 
-/* ─── PLAYER AREA & CHAT FLEX YAPISI ─── */
+/* ─── PLAYER AREA & CHAT YAPISI ─── */
 .player-area{
   display:flex;flex-direction:column;
   overflow:hidden;
@@ -530,7 +530,7 @@ nav{
   transition: all 0.3s ease;
 }
 
-/* ─── ÖZEL CHAT PANELİ ─── */
+/* ─── CHAT PANELİ ─── */
 .chat-sidebar-panel {
   width: 280px;
   background: rgba(6, 10, 22, 0.95);
@@ -795,7 +795,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
   <div class="intro-text-box">
     <div class="f-wrapper">
       <span class="intro-f">F</span>
-    </div><span class="intro-rest">FATBOK</span>
+    </div><span class="intro-rest">ATBOK</span>
   </div>
 </div>
 
@@ -916,7 +916,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 </div>
 
 <script>
-// Render Canlı Sohbet Sunucu Bağlantısı
+// Sohbet Sunucu Bağlantısı
 const socket = io('https://fatbokchat.onrender.com');
 
 socket.on('chatMessage', (data) => {
