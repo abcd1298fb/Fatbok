@@ -503,7 +503,7 @@ nav{
   background: var(--accent-glow);
 }
 
-/* ─── PLAYER AREA & CHAT FLEX YAPISI ─── */
+/* ─── PLAYER AREA & CHAT YAPISI ─── */
 .player-area{
   display:flex;flex-direction:column;
   overflow:hidden;
@@ -531,7 +531,7 @@ nav{
   transition: all 0.3s ease;
 }
 
-/* ─── ÖZEL CHAT PANELİ ─── */
+/* ─── CHAT PANELİ ─── */
 .chat-sidebar-panel {
   width: 280px;
   background: rgba(6, 10, 22, 0.95);
@@ -802,7 +802,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
   <div class="intro-text-box">
     <div class="f-wrapper">
       <span class="intro-f">F</span>
-    </div><span class="intro-rest">FATBOK</span>
+    </div><span class="intro-rest">ATBOK</span>
   </div>
 </div>
 
@@ -897,7 +897,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
         </div>
       </div>
 
-      <!-- Kendi Canlı Sohbet Panelimiz (Sağ Yan Panel) -->
+      <!-- Canlı Sohbet Paneli -->
       <div class="chat-sidebar-panel hidden" id="chatPanel">
         <div class="chat-header">
           <span>💬 FATBOK Canlı Sohbet</span>
@@ -925,7 +925,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 // Render Canlı Sohbet Sunucu Bağlantısı
 const socket = io('https://fatbokchat.onrender.com');
 
-// Kullanıcı adından benzersiz sabit renk üreteç fonksiyonu
+// renk üreteç kodu
 function stringToColor(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -964,7 +964,7 @@ function sendChatMessage(e) {
 function appendMessage(user, text, time) {
   const container = document.getElementById('chatMessages');
   
-  // Akıllı kaydırma kontrolü (Kullanıcı yukarıda geçmişi okuyorsa aşağı kaydırma)
+  // Akıllı kaydırma kontrolü 
   const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
 
   const userColor = stringToColor(user);
@@ -993,7 +993,7 @@ function toggleChatPanel() {
   document.getElementById('chatPanel').classList.toggle('hidden');
 }
 
-// Sayfa açıldığında kayıtlı kullanıcı adını otomatik doldur
+// Otomatik Kullanıcı kodu
 window.addEventListener('DOMContentLoaded', () => {
   const savedUser = localStorage.getItem('fatbok_chat_user');
   if (savedUser) {
