@@ -174,6 +174,7 @@ nav{
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
   contain: layout style;
   height: 100%;
+  position: relative;
 }
 .layout.theater-active .ch-sidebar {
   transform: translateX(-320px);
@@ -563,7 +564,7 @@ nav{
   gap: 4px;
 }
 
-/* Sabitleme Butonu (Admin) */
+/* Sabitleme Butonu */
 .pin-msg-btn {
   background: rgba(255, 149, 0, 0.2);
   border: 1px solid rgba(255, 149, 0, 0.4);
@@ -578,7 +579,7 @@ nav{
 }
 .pin-msg-btn:hover { background: rgba(255, 149, 0, 0.4); }
 
-/* Mesaj Silme Butonu (Admin) */
+/* Mesaj Silme Butonu */
 .delete-msg-btn {
   background: rgba(255, 59, 48, 0.2);
   border: 1px solid rgba(255, 59, 48, 0.4);
@@ -593,7 +594,7 @@ nav{
 }
 .delete-msg-btn:hover { background: rgba(255, 59, 48, 0.4); }
 
-/* RGB Animasyonlu Admin Stilleri */
+/* Admin chat */
 @keyframes rgbGlow {
   0% { color: #ff0055; text-shadow: 0 0 8px rgba(255,0,85,0.6); }
   33% { color: #00ff55; text-shadow: 0 0 8px rgba(0,255,85,0.6); }
@@ -798,10 +799,11 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 .btn-adv-action.secondary { background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border); margin-top: 10px; }
 .btn-adv-action.secondary:hover { background: rgba(255, 255, 255, 0.15); }
 
+/* ─── MOBİL UYUMLULUK VE KANALLAR ÜSTÜNE AÇILAN CHAT ─── */
 @media(max-width:768px){
   .layout{ grid-template-columns:1fr; grid-template-rows: auto 1fr; height: calc(100vh - 58px); }
   .layout.theater-active { grid-template-columns: 1fr; grid-template-rows: calc(100vh - 58px) 0px; }
-  .ch-sidebar{ flex: 1; height: auto; max-height: none; border-right:none; order:2; }
+  .ch-sidebar{ flex: 1; height: auto; max-height: none; border-right:none; order:2; position: relative; }
   .layout.theater-active .ch-sidebar { transform: translateY(100%); max-height: 0px; opacity: 0; padding: 0; }
   .player-area{ order:1; height: auto; }
   nav{padding:0 14px}
@@ -809,12 +811,25 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
   .nav-search{ max-width: 140px; margin: 0 0 0 auto; }
   .nav-spacer { width: auto; }
 
-  .chat-sidebar-panel {
-    position: absolute; right: 0; top: 0; bottom: 0; width: 230px;
+  /* Mobilde Chat: Sol kanallar panelinde reklam alanının yukarısını kaplar */
+  .ch-sidebar .chat-sidebar-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 50;
+    background: rgba(6, 10, 22, 0.98);
+    border-left: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
-  .chat-sidebar-panel.hidden {
-    transform: translateX(230px);
-    width: 230px;
+  
+  .ch-sidebar .chat-sidebar-panel.hidden {
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
   }
 }
 </style>
@@ -950,10 +965,10 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 </div>
 
 <script>
-// Render Canlı Sohbet Sunucu Bağlantısı
+// snc
 const socket = io('https://fatbokchat.onrender.com');
 
-// Admin Şifresi
+// .
 const ADMIN_SECRET_PASS = "fatbok2026"; 
 
 let slowModeActive = false;
@@ -998,7 +1013,7 @@ socket.on('chatMessage', (data) => {
   appendMessage(data.id, data.username, data.message, data.time, data.isAdmin);
 });
 
-// Sunucudan mesaj silme sinyali gelirse ekrandan kaldır
+// Sunucudan mesaj silme sinyali
 socket.on('deleteMessage', (msgId) => {
   const msgEl = document.getElementById(`msg-${msgId}`);
   if (msgEl) {
@@ -1023,7 +1038,7 @@ function toggleSlowModeAdmin() {
   socket.emit('toggleSlowMode', newState);
 }
 
-// Sunucudan sabitlenen mesaj gelirse
+// sabit mesaj
 socket.on('pinnedMessage', (text) => {
   const banner = document.getElementById('pinnedBanner');
   const textEl = document.getElementById('pinnedText');
@@ -1047,7 +1062,7 @@ function sendChatMessage(e) {
   
   const isAdmin = localStorage.getItem('fatbok_is_admin') === 'true';
   
-  // Normal kullanıcılar için 3 saniye yavaş mod kontrolü
+  // Yavaş mod
   if (slowModeActive && !isAdmin) {
     const currentTime = Date.now();
     const timeLeft = SLOW_MODE_LIMIT - (currentTime - lastMessageTime);
@@ -1072,7 +1087,7 @@ function sendChatMessage(e) {
 
   localStorage.setItem('fatbok_chat_user', username);
 
-  // Benzersiz mesaj ID üretimi
+  // ID üretimi
   const msgId = 'm_' + Math.random().toString(36).substring(2, 9);
 
   socket.emit('chatMessage', { id: msgId, username, message, isAdmin: userIsAdminFlag });
@@ -1082,7 +1097,7 @@ function sendChatMessage(e) {
   messageInput.focus();
 }
 
-// Mesajı Herkes İçin Silme (Sadece Admin Tetikleyebilir)
+// Mesajı Herkes İçin Silme
 function deleteMessage(msgId) {
   if (localStorage.getItem('fatbok_is_admin') !== 'true') {
     alert("Bu işlem için yetkiniz yok!");
@@ -1152,9 +1167,23 @@ function escapeHtml(str) {
 }
 
 function toggleChatPanel() {
-  document.getElementById('chatPanel').classList.toggle('hidden');
+  const chatPanel = document.getElementById('chatPanel');
+  // Mobil chat 
+  if (window.innerWidth <= 768) {
+    const chSidebar = document.querySelector('.ch-sidebar');
+    if (chatPanel.parentElement !== chSidebar) {
+      chSidebar.insertBefore(chatPanel, chSidebar.querySelector('.adv-panel'));
+    }
+  } else {
+    const videoWrap = document.querySelector('.content-body-flex');
+    if (chatPanel.parentElement !== videoWrap) {
+      videoWrap.appendChild(chatPanel);
+    }
+  }
+  chatPanel.classList.toggle('hidden');
 }
 
+// Chat panel
 window.addEventListener('DOMContentLoaded', () => {
   const savedUser = localStorage.getItem('fatbok_chat_user');
   if (savedUser) {
@@ -1164,10 +1193,15 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('themeSelect').value = savedTheme;
   changeTheme(savedTheme);
 
-  // Adminse yavaş mod butonunu göster
+  // Admin slow mod
   if (localStorage.getItem('fatbok_is_admin') === 'true') {
     const adminBtn = document.getElementById('slowModeAdminBtn');
     if (adminBtn) adminBtn.style.display = 'inline-block';
+  }
+
+  const chatPanel = document.getElementById('chatPanel');
+  if (window.innerWidth <= 768) {
+    document.querySelector('.ch-sidebar').insertBefore(chatPanel, document.querySelector('.ch-sidebar').querySelector('.adv-panel'));
   }
 
   socket.emit('getPinnedMessage');
@@ -1671,4 +1705,4 @@ renderCountryFilters();
 renderList();
 </script>
 </body>
-</html>
+  </html>
