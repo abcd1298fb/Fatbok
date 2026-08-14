@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<!-- . -->
+<!-- .. -->
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <!-- Plyr Player CSS JS-->
 <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
@@ -113,6 +113,29 @@ nav{
   pointer-events: none;
 }
 
+/* DOMAIN */
+.domain-alert {
+  padding: 10px 12px;
+  background: rgba(0, 122, 255, 0.08);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.domain-alert-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.4;
+}
+.domain-icon { font-size: 14px; }
+.domain-link {
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .country-filter-wrap{
   padding: 10px 8px;
   border-bottom: 1px solid var(--border);
@@ -142,7 +165,7 @@ nav{
 }
 .country-btn .flag-icon { font-size: 14px; }
 
-/* (Kanallar / Maçlar) */
+/* Sekmeler (Kanallar / Maçlar) */
 .main-tabs-wrap {
   display: flex;
   background: rgba(0,0,0,0.3);
@@ -211,7 +234,7 @@ nav{
 .ch-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ch-live-badge{ flex-shrink:0;width:7px;height:7px;background:#34c759;border-radius:50%; }
 
-/* Tarih */
+/* Tarih Grubu Başlığı */
 .date-group-header {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 15px;
@@ -577,7 +600,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 .plyr__video-wrapper { height: 100% !important; display: flex; align-items: center; justify-content: center; }
 .plyr video { object-fit: contain; }
 
-/*Yüklenme Ekranı*/
+/* Yüklenme Ekranı */
 .skeleton-loader {
   position: absolute; inset: 0;
   background: rgba(6, 12, 28, 0.95);
@@ -676,6 +699,16 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 <div class="layout" id="mainLayout">
 
   <div class="ch-sidebar">
+    <!-- YENİ EKLENEN ALAN ADI DUYURU ALANI (ÜST KISIMDA) -->
+    <div class="domain-alert">
+      <div class="domain-alert-text">
+        <span class="domain-icon">📢</span>
+        <div>
+          Bir sonraki alan adımız <span class="domain-link" onclick="window.open('https://fatbok1.vercel.app', '_blank')">fatbok1.vercel.app</span> olacaktır.
+        </div>
+      </div>
+    </div>
+
     <div class="main-tabs-wrap">
       <button class="main-tab-btn active" id="tabChannelsBtn" onclick="switchMainTab('channels')">📺 Kanallar</button>
       <button class="main-tab-btn" id="tabMatchesBtn" onclick="switchMainTab('matches')">⚽ Maçlar</button>
@@ -999,7 +1032,7 @@ const countries = [{ code: "tr", name: "Türkiye", flag: "🇹🇷" }];
 const channels = [
   {id:1,  name:"BeIN Sports 1",  cat:"tr", logo:"https://royaltv33.com/img/beinsports1.png", stream: "https://hlsforever.forgetmoenszo.workers.dev/https://corestream.siteyaptim.live//bein1/tracks-v1a1/mono.m3u8"},
   {id:2,  name:"BeIN Sports 1 B",  cat:"tr", logo:"https://royaltv33.com/img/beinsports1.png", stream:"https://zbahistv65.com/channel.html?id=zirve"},
-  {id:3,  name:"BeIN Sports 1 C",  cat:"tr", logo:"https://royaltv33.com/img/beinsports1.png", stream:"https://jsistem36r.online/beinsport/main.m3u8"},
+  {id:3,  name:"BeIN Sports 1 C",  cat:"tr", logo:"https://royaltv33.com/img/beinsports1.png", stream:"https://e-aga-m.3289439f1645c102498296d74fc626b9.online/bc2b05d321cb80050c5d035a9daeb26d/-/5021/playlist.m3u8"},
   {id:4,  name:"BeIN Sports 2",  cat:"tr", logo:"https://royaltv33.com/img/beinsports2.png", stream:"https://zbahistv65.com/channel.html?id=b2"},
   {id:5,  name:"BeIN Sports 2 B",  cat:"tr", logo:"https://royaltv33.com/img/beinsports2.png", stream:"https://zbahistv65.com/channel.html?id=b2"},
   {id:6,  name:"BeIN Sports 2 C",  cat:"tr", logo:"https://royaltv33.com/img/beinsports2.png", stream:"https://dlhd.st/hub/stream-62.php"},
