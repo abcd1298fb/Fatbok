@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<!-- .. -->
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <!-- Plyr Player CSS JS-->
 <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
@@ -776,7 +775,7 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 </div>
 
 <script>
-const socket = io('https://fatbokchat.onrender.com');
+const socket = io('https://fatbokchat1.onrender.com/');
 
 function getAdminPassword() {
   return localStorage.getItem('fatbok_admin_pass') || "fatbok2026";
@@ -835,6 +834,38 @@ function checkUsernameAdmin(inputEl) {
     localStorage.removeItem('fatbok_is_admin');
   }
 }
+
+// Socket Güncellemesi: Sayfa yüklendiğinde geçmiş mesajları, pin durumunu ve yavaş modu otomatik al
+socket.on('initChat', (data) => {
+  const container = document.getElementById('chatMessages');
+  container.innerHTML = ''; // Temizle
+  
+  if (data.messages && data.messages.length > 0) {
+    data.messages.forEach(msg => {
+      appendMessage(msg.id, msg.username, msg.message, msg.time, msg.isAdmin);
+    });
+  }
+
+  // Pinli mesajı ayarla
+  const banner = document.getElementById('pinnedBanner');
+  const textEl = document.getElementById('pinnedText');
+  const unpinBtn = document.getElementById('unpinBtn');
+  
+  if (data.pinned) {
+    textEl.textContent = data.pinned;
+    banner.classList.add('active');
+    if (localStorage.getItem('fatbok_is_admin') === 'true') unpinBtn.style.display = 'inline-block';
+  } else {
+    banner.classList.remove('active');
+  }
+
+  // Yavaş modu ayarla
+  slowModeActive = data.slowMode;
+  const adminBtn = document.getElementById('slowModeAdminBtn');
+  if (adminBtn && localStorage.getItem('fatbok_is_admin') === 'true') {
+    adminBtn.textContent = data.slowMode ? "🐢 Yavaş Mod: Açık" : "🐢 Yavaş Mod: Kapalı";
+  }
+});
 
 socket.on('chatMessage', (data) => {
   appendMessage(data.id, data.username, data.message, data.time, data.isAdmin);
@@ -990,8 +1021,6 @@ window.addEventListener('DOMContentLoaded', () => {
   if (window.innerWidth <= 768) {
     document.querySelector('.ch-sidebar').insertBefore(chatPanel, document.querySelector('.ch-sidebar').querySelector('.adv-panel'));
   }
-
-  socket.emit('getPinnedMessage');
 });
 
 const countries = [{ code: "tr", name: "Türkiye", flag: "🇹🇷" }];
