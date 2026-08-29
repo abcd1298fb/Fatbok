@@ -7,10 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<!-- Plyr Player CSS JS-->
 <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
 <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-<!-- Vercel Analytics -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
@@ -315,12 +313,21 @@ nav{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Logoların kendi etrafında dönmesi için animasyon */
+@keyframes spinLogo {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .match-team-logo {
   width: 24px;
   height: 24px;
   object-fit: contain;
   flex-shrink: 0;
+  animation: spinLogo 6s linear infinite;
 }
+
 .match-center-info {
   display: flex;
   flex-direction: column;
