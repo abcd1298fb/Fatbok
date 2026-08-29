@@ -316,11 +316,10 @@ nav{
   text-overflow: ellipsis;
 }
 
-/* Dünyanın ekseni etrafında dönmesi gibi (Yatay kayma / panoramik kaydırma efekti) */
-@keyframes worldSpin {
-  0% { transform: translateX(0px); }
-  50% { transform: translateX(5px); }
-  100% { transform: translateX(0px); }
+/* Kendi etrafında 360 derece tam tur dönme efekti (Şampiyonlar Ligi kura çekimi tarzı) */
+@keyframes spin360 {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
 }
 
 .match-team-logo {
@@ -328,7 +327,8 @@ nav{
   height: 24px;
   object-fit: contain;
   flex-shrink: 0;
-  animation: worldSpin 4s ease-in-out infinite;
+  animation: spin360 4s linear infinite;
+  transform-style: preserve-3d;
 }
 
 .match-center-info {
