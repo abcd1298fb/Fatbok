@@ -657,6 +657,7 @@ function renderMatchesList() {
         cardHtml = `
           <div class="match-main-row" ${firstChannelId ? `onclick="playMatchChannel(${firstChannelId})"` : ''} title="Yayını Başlat">
             <div class="match-team-side">
+              ${match.homeLogo ? `<img src="${match.homeLogo}" alt="${match.homeTeam}" style="width:20px;height:20px;object-fit:contain;">` : ''}
               <span class="match-team-name">${match.homeTeam}</span>
             </div>
             <div class="match-center-info">
@@ -665,6 +666,7 @@ function renderMatchesList() {
             </div>
             <div class="match-team-side right">
               <span class="match-team-name">${match.awayTeam}</span>
+              ${match.awayLogo ? `<img src="${match.awayLogo}" alt="${match.awayTeam}" style="width:20px;height:20px;object-fit:contain;">` : ''}
             </div>
           </div>
         `;
