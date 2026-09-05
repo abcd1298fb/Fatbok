@@ -316,21 +316,6 @@ nav{
   text-overflow: ellipsis;
 }
 
-/* Kendi etrafında 360 derece tam tur dönme efekti */
-@keyframes spin360 {
-  0% { transform: rotateY(0deg); }
-  100% { transform: rotateY(360deg); }
-}
-
-.match-team-logo {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  flex-shrink: 0;
-  animation: spin360 4s linear infinite;
-  transform-style: preserve-3d;
-}
-
 .match-center-info {
   display: flex;
   flex-direction: column;
@@ -672,7 +657,6 @@ function renderMatchesList() {
         cardHtml = `
           <div class="match-main-row" ${firstChannelId ? `onclick="playMatchChannel(${firstChannelId})"` : ''} title="Yayını Başlat">
             <div class="match-team-side">
-              ${match.homeLogo ? `<img src="${match.homeLogo}" alt="${match.homeTeam}" class="match-team-logo" onerror="this.src='${fallbackLogo}'"/>` : ''}
               <span class="match-team-name">${match.homeTeam}</span>
             </div>
             <div class="match-center-info">
@@ -681,14 +665,12 @@ function renderMatchesList() {
             </div>
             <div class="match-team-side right">
               <span class="match-team-name">${match.awayTeam}</span>
-              ${match.awayLogo ? `<img src="${match.awayLogo}" alt="${match.awayTeam}" class="match-team-logo" onerror="this.src='${fallbackLogo}'"/>` : ''}
             </div>
           </div>
         `;
       } else {
         cardHtml = `
           <div class="match-main-row" ${firstChannelId ? `onclick="playMatchChannel(${firstChannelId})"` : ''} title="Yayını Başlat" style="justify-content: center; gap: 12px;">
-            ${match.homeLogo ? `<img src="${match.homeLogo}" alt="${match.homeTeam}" class="match-team-logo" style="width: 24px; height: 24px;" onerror="this.src='${fallbackLogo}'"/>` : ''}
             <div style="display: flex; flex-direction: column; align-items: center;">
               <span class="match-time" style="margin-bottom: 2px;">${match.time}</span>
               <span class="match-team-name" style="font-size: 13px;">${match.homeTeam}</span>
@@ -890,16 +872,61 @@ const channels = [
 
 const dailyMatchesByDate = [
   {
-    date: "4 Eylül 2026",
+    date: "5 Eylül 2026",
     matches: [
       {
         league: "Türkiye - Süper Lig",
         time: "20:00",
-        homeTeam: "Başakşehir",
-        homeLogo: "https://assets.football-logos.cc/logos/turkey/700x700/basaksehir.c7750a25.png",
-        awayTeam: "Galatasaray",
-        awayLogo: "https://assets.football-logos.cc/logos/turkey/700x700/galatasaray.090f837e.png",
+        homeTeam: "Fenerbahçe",
+        homeLogo: "https://assets.football-logos.cc/logos/turkey/700x700/fenerbahce.623eae5c.png",
+        awayTeam: "Beşiktaş",
+        awayLogo: "https://assets.football-logos.cc/logos/turkey/700x700/besiktas.c60ea853.png",
         channelIds: [1, 2, 3]
+      },
+      {
+        league: "Türkiye - 1. Lig",
+        time: "20:00",
+        homeTeam: "Keçiörengücü",
+        homeLogo: "https://assets.football-logos.cc/logos/turkey/700x700/keciorengucu.9bc14918.png",
+        awayTeam: "Sarıyer",
+        awayLogo: "https://assets.football-logos.cc/logos/turkey/700x700/sariyer.a39aef29.png",
+        channelIds: [43, 4]
+      },
+      {
+        league: "Türkiye - 1. Lig",
+        time: "20:00",
+        homeTeam: "Pendikspor",
+        homeLogo: "https://assets.football-logos.cc/logos/turkey/700x700/pendikspor.37cdb927.png",
+        awayTeam: "Ümraniyespor",
+        awayLogo: "https://assets.football-logos.cc/logos/turkey/700x700/umraniyespor.09d147ae.png",
+        channelIds: [13, 14]
+      },
+      {
+        league: "İngiltere - Premier League",
+        time: "19:30",
+        homeTeam: "Hull City",
+        homeLogo: "https://assets.football-logos.cc/logos/england/700x700/hull-city.ca756d94.png",
+        awayTeam: "Aston Villa",
+        awayLogo: "https://assets.football-logos.cc/logos/england/700x700/aston-villa.1c2803fb.png",
+        channelIds: [17, 19]
+      },
+      {
+        league: "İspanya - LALIGA",
+        time: "19:30",
+        homeTeam: "Rayo Vallecano",
+        homeLogo: "https://assets.football-logos.cc/logos/spain/700x700/rayo-vallecano.784b244d.png",
+        awayTeam: "Santander",
+        awayLogo: "https://assets.football-logos.cc/logos/spain/700x700/racing.0efdb15f.png",
+        channelIds: [17, 19]
+      },
+      {
+        league: "İspanya - LALIGA",
+        time: "22:00",
+        homeTeam: "Villarreal",
+        homeLogo: "https://assets.football-logos.cc/logos/spain/700x700/villarreal.f47fae64.png",
+        awayTeam: "Dep. A Coruna",
+        awayLogo: "https://assets.football-logos.cc/logos/spain/700x700/deportivo-la-coruna.f221c9cc.png",
+        channelIds: [17, 19]
       }
     ]
   }
