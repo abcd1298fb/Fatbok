@@ -2,21 +2,31 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>CREX</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<!-- Plyr Player CSS JS-->
+
+<!-- Plyr Player CSS JS -->
 <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
 <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+
 <!-- Vercel Analytics -->
 <script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  window.va = window.va || function () {
+    (window.vaq = window.vaq || []).push(arguments);
+  };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
 :root{
   --bg:#02050f;
   --surface: rgba(10, 15, 30, 0.95);
@@ -30,71 +40,124 @@
   --text:#ffffff;
   --muted:#7ba1d5;
   --muted2:#94a3b8;
-  
+
   --plyr-color-main: var(--accent);
   --plyr-video-background: #000000;
 }
-html{scroll-behavior:smooth}
+
+html{
+  scroll-behavior:smooth;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+}
+
 body{
   background:var(--bg);
   color:var(--text);
   font-family:'Manrope',sans-serif;
   min-height:100vh;
   overflow-x:hidden;
-  position: relative;
+  position:relative;
 }
 
 /* ─── ARKA PLAN ─── */
-.liquid-bg {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  z-index: -1;
-  background: #02050f;
+.liquid-bg{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:-1;
+  background:#02050f;
 }
 
 /* ─── NAV ─── */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:300;
   height:58px;
-  background: rgba(2, 6, 18, 0.98);
+  background:rgba(2, 6, 18, 0.98);
   border-bottom:1px solid var(--border);
-  display:flex;align-items:center;
-  justify-content: space-between;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   padding:0 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow:0 4px 20px rgba(0, 0, 0, 0.5);
 }
+
 .nav-logo{
-  display: flex;
-  align-items: center;
-  width: 150px;
-  height: 36px;
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
+  display:flex;
+  align-items:center;
+  width:150px;
+  height:36px;
+  cursor:pointer;
+  user-select:none;
+  flex-shrink:0;
 }
-.nav-logo img {
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: contain;
+
+.nav-logo img{
+  max-height:100%;
+  max-width:100%;
+  object-fit:contain;
 }
+
 .nav-search{
   flex:1;
   max-width:320px;
-  display:flex;align-items:center;gap:10px;
-  background: rgba(255, 255, 255, 0.06);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255, 255, 255, 0.06);
   border:1px solid var(--border);
-  border-radius:8px;padding:0 14px;height:36px;
-  margin: 0 auto;
+  border-radius:8px;
+  padding:0 14px;
+  height:36px;
+  margin:0 auto;
 }
+
 .nav-search input{
-  background:none;border:none;outline:none;
-  color:var(--text);font-size:13px;font-family:'Manrope',sans-serif;
+  background:none;
+  border:none;
+  outline:none;
+  color:var(--text);
+  font-size:13px;
+  font-family:'Manrope',sans-serif;
   width:100%;
 }
-.nav-search input::placeholder{color:var(--muted)}
-.search-icon{color:var(--muted);font-size:14px;flex-shrink:0}
-.nav-spacer { width: 150px; flex-shrink: 0; display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
-.live-dot{width:7px;height:7px;background:#34c759;border-radius:50%;opacity:0.9;}
+
+.nav-search input::placeholder{
+  color:var(--muted)
+}
+
+.search-icon{
+  color:var(--muted);
+  font-size:14px;
+  flex-shrink:0
+}
+
+.nav-spacer{
+  width:150px;
+  flex-shrink:0;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:8px;
+}
+
+.live-dot{
+  width:7px;
+  height:7px;
+  background:#34c759;
+  border-radius:50%;
+  opacity:0.9;
+}
 
 /* ─── LAYOUT ─── */
 .layout{
@@ -102,397 +165,781 @@ nav{
   grid-template-columns:320px 1fr;
   margin-top:58px;
   height:calc(100vh - 58px);
+  height:calc(100dvh - 58px);
 }
-.layout.theater-active { grid-template-columns: 0px 1fr; }
+
+.layout.theater-active{
+  grid-template-columns:0px 1fr;
+}
 
 /* ─── CHANNEL SIDEBAR ─── */
 .ch-sidebar{
-  background: var(--surface);
+  background:var(--surface);
   border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
+  display:flex;
+  flex-direction:column;
   overflow:hidden;
-  height: 100%;
-  position: relative;
+  height:100%;
+  position:relative;
 }
-.layout.theater-active .ch-sidebar {
-  transform: translateX(-320px);
-  opacity: 0;
-  pointer-events: none;
+
+.layout.theater-active .ch-sidebar{
+  transform:translateX(-320px);
+  opacity:0;
+  pointer-events:none;
 }
 
 /* DOMAIN */
-.domain-alert {
-  padding: 10px 12px;
-  background: rgba(0, 122, 255, 0.08);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
+.domain-alert{
+  padding:10px 12px;
+  background:rgba(0, 122, 255, 0.08);
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
 }
-.domain-alert-text {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: var(--text);
-  line-height: 1.4;
+
+.domain-alert-text{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  color:var(--text);
+  line-height:1.4;
 }
-.domain-icon { font-size: 14px; }
-.domain-link {
-  color: var(--accent);
-  font-weight: 800;
-  text-decoration: underline;
-  cursor: pointer;
+
+.domain-icon{
+  font-size:14px;
+}
+
+.domain-link{
+  color:var(--accent);
+  font-weight:800;
+  text-decoration:underline;
+  cursor:pointer;
 }
 
 .country-filter-wrap{
-  padding: 10px 8px;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  overflow-x: auto;
-  display: flex;
-  gap: 6px;
+  padding:10px 8px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  overflow-x:auto;
+  display:flex;
+  gap:6px;
 }
-.country-filter-wrap::-webkit-scrollbar { height: 3px; }
-.country-filter-wrap::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
-}
-.country-btn{
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  color: var(--text);
-  font-size: 12px; font-weight: 600;
-  cursor: pointer; white-space: nowrap;
-}
-.country-btn.active{
-  background: var(--accent);
-  border-color: var(--accent);
-}
-.country-btn .flag-icon { font-size: 14px; }
 
-/* Sekmeler (Kanallar / Maçlar) */
-.main-tabs-wrap {
-  display: flex;
-  background: rgba(0,0,0,0.3);
-  border-bottom: 1px solid var(--border);
-  padding: 8px;
-  gap: 8px;
+.country-filter-wrap::-webkit-scrollbar{
+  height:3px;
 }
-.main-tab-btn {
-  flex: 1;
-  padding: 8px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--muted2);
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  text-align: center;
+
+.country-filter-wrap::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.15);
+  border-radius:10px;
 }
-.main-tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.country-btn{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 12px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:20px;
+  color:var(--text);
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.country-btn.active{
+  background:var(--accent);
+  border-color:var(--accent);
+}
+
+.country-btn .flag-icon{
+  font-size:14px;
+}
+
+/* Sekmeler */
+.main-tabs-wrap{
+  display:flex;
+  background:rgba(0,0,0,0.3);
+  border-bottom:1px solid var(--border);
+  padding:8px;
+  gap:8px;
+}
+
+.main-tab-btn{
+  flex:1;
+  padding:8px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:6px;
+  color:var(--muted2);
+  font-weight:700;
+  font-size:13px;
+  cursor:pointer;
+  text-align:center;
+}
+
+.main-tab-btn.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
 
 .ch-list{
-  flex:1;overflow-y:auto;padding:8px;
-  position: relative;
+  flex:1;
+  overflow-y:auto;
+  padding:8px;
+  position:relative;
 }
-.ch-list::-webkit-scrollbar{width:4px}
-.ch-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:2px}
+
+.ch-list::-webkit-scrollbar{
+  width:4px
+}
+
+.ch-list::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.2);
+  border-radius:2px
+}
 
 .ch-card{
-  display:flex;align-items:center;gap:12px;
-  padding:12px;border-radius:8px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border-radius:8px;
   cursor:pointer;
   border:1px solid transparent;
   margin-bottom:4px;
-  background: rgba(255, 255, 255, 0.02);
-  position: relative;
-  overflow: hidden;
-}
-.ch-card:hover{
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.25);
-}
-.ch-card.active{
-  background: var(--surface3);
-  border-color: var(--accent);
+  background:rgba(255,255,255,0.02);
+  position:relative;
+  overflow:hidden;
 }
 
-.ch-card-flag {
-  font-size: 16px; flex-shrink: 0;
-  width: 24px; height: 24px;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.04);
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
+.ch-card:hover{
+  background:rgba(255,255,255,0.09);
+  border-color:rgba(255,255,255,0.25);
+}
+
+.ch-card.active{
+  background:var(--surface3);
+  border-color:var(--accent);
+}
+
+.ch-card-flag{
+  font-size:16px;
+  flex-shrink:0;
+  width:24px;
+  height:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,0.04);
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.08);
 }
 
 .ch-logo{
-  width:44px;height:44px;border-radius:8px;
-  background: rgba(255, 255, 255, 0.98);
+  width:44px;
+  height:44px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.98);
   border:1px solid rgba(255,255,255,0.5);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;flex-shrink:0;padding:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  flex-shrink:0;
+  padding:4px;
 }
-.ch-logo img{ max-width:100%;max-height:100%;object-fit:contain; }
-.ch-info{flex:1;min-width:0}
-.ch-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ch-live-badge{ flex-shrink:0;width:7px;height:7px;background:#34c759;border-radius:50%; }
+
+.ch-logo img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+
+.ch-info{
+  flex:1;
+  min-width:0;
+}
+
+.ch-name{
+  font-size:14px;
+  font-weight:700;
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+
+.ch-live-badge{
+  flex-shrink:0;
+  width:7px;
+  height:7px;
+  background:#34c759;
+  border-radius:50%;
+}
 
 /* Lig / Kategori Başlığı */
-.league-group-header {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 5px 10px;
-  border-radius: 4px;
-  margin: 12px 0 6px 0;
-  border-left: 3px solid var(--accent);
+.league-group-header{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:0.5px;
+  color:#fff;
+  background:rgba(255,255,255,0.06);
+  padding:5px 10px;
+  border-radius:4px;
+  margin:12px 0 6px 0;
+  border-left:3px solid var(--accent);
 }
-.league-group-header:first-child {
-  margin-top: 2px;
+
+.league-group-header:first-child{
+  margin-top:2px;
 }
 
 /* Tarih Grubu Başlığı */
-.date-group-header {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: var(--accent);
-  background: rgba(0, 122, 255, 0.08);
-  padding: 6px 10px;
-  border-radius: 6px;
-  margin: 10px 0 6px 0;
-  border-left: 3px solid var(--accent);
-}
-.date-group-header:first-child {
-  margin-top: 2px;
+.date-group-header{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:1px;
+  color:var(--accent);
+  background:rgba(0,122,255,0.08);
+  padding:6px 10px;
+  border-radius:6px;
+  margin:10px 0 6px 0;
+  border-left:3px solid var(--accent);
 }
 
-/* Maç Kartı Tasarımı */
-.match-card {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 6px;
-  gap: 8px;
-}
-.match-card:hover {
-  border-color: rgba(255, 255, 255, 0.25);
+.date-group-header:first-child{
+  margin-top:2px;
 }
 
-.match-main-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  cursor: pointer;
-}
-.match-team-side {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  min-width: 0;
-}
-.match-team-side.right {
-  justify-content: flex-end;
-  text-align: right;
-}
-.match-team-name {
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Maç Kartı */
+.match-card{
+  display:flex;
+  flex-direction:column;
+  padding:10px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:8px;
+  margin-bottom:6px;
+  gap:8px;
 }
 
-.match-center-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 4px;
-  flex-shrink: 0;
+.match-card:hover{
+  border-color:rgba(255,255,255,0.25);
 }
-.match-time {
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--accent);
-  background: rgba(0, 122, 255, 0.1);
-  padding: 2px 5px;
-  border-radius: 4px;
-  margin-bottom: 2px;
+
+.match-main-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  cursor:pointer;
 }
-.match-vs {
-  font-size: 9px;
-  color: var(--muted2);
-  font-weight: 700;
+
+.match-team-side{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex:1;
+  min-width:0;
+}
+
+.match-team-side.right{
+  justify-content:flex-end;
+  text-align:right;
+}
+
+.match-team-name{
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.match-center-info{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:0 4px;
+  flex-shrink:0;
+}
+
+.match-time{
+  font-size:10px;
+  font-weight:800;
+  color:var(--accent);
+  background:rgba(0,122,255,0.1);
+  padding:2px 5px;
+  border-radius:4px;
+  margin-bottom:2px;
+}
+
+.match-vs{
+  font-size:9px;
+  color:var(--muted2);
+  font-weight:700;
 }
 
 /* Alternatif Yayın Butonları */
-.match-alternatives {
-  display: flex;
-  gap: 6px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding-top: 6px;
+.match-alternatives{
+  display:flex;
+  gap:6px;
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding-top:6px;
 }
-.alt-stream-btn {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 5px 4px;
-  cursor: pointer;
-  text-align: center;
+
+.alt-stream-btn{
+  flex:1;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:6px;
+  color:var(--text);
+  font-size:11px;
+  font-weight:700;
+  padding:5px 4px;
+  cursor:pointer;
+  text-align:center;
 }
-.alt-stream-btn:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+
+.alt-stream-btn:hover{
+  background:var(--accent);
+  border-color:var(--accent);
 }
 
 /* REKLAM ALANI */
 .adv-panel{
   padding:12px;
   border-top:1px solid var(--border);
-  background: rgba(0, 0, 0, 0.4);
+  background:rgba(0,0,0,0.4);
   flex-shrink:0;
-  display:flex; justify-content:center; align-items:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
-.adv-link{ text-decoration: none; width: 100%; max-width: 300px; display: block; }
+
+.adv-link{
+  text-decoration:none;
+  width:100%;
+  max-width:300px;
+  display:block;
+}
+
 .adv-box{
-  width:100%; height:100px;
-  background: rgba(0, 0, 0, 0.3);
+  width:100%;
+  height:100px;
+  background:rgba(0,0,0,0.3);
   border:1px dashed rgba(255,255,255,0.25);
   border-radius:6px;
-  display:flex; align-items:center; justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   color:var(--muted2);
-  font-size:12px; font-weight:600; letter-spacing:0.5px;
-  text-align:center; cursor:pointer;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.5px;
+  text-align:center;
+  cursor:pointer;
 }
 
-/* ─── PLAYER AREA YAPISI ─── */
+/* ─── PLAYER AREA ─── */
 .player-area{
-  display:flex;flex-direction:column;
+  display:flex;
+  flex-direction:column;
   overflow:hidden;
   background:transparent;
-  position: relative;
+  position:relative;
 }
 
-.content-body-flex {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  position: relative;
-  z-index: 5;
-  overflow: hidden;
+.content-body-flex{
+  display:flex;
+  flex-direction:row;
+  flex:1;
+  position:relative;
+  z-index:5;
+  overflow:hidden;
 }
 
-.video-main-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  background: #000;
-  min-height: 250px;
-  width: 100%;
+.video-main-container{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  background:#000;
+  min-height:250px;
+  width:100%;
 }
 
-.btn-theater {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 6px 10px; border-radius: 6px;
-  cursor: pointer; font-size: 12px; font-weight: 600;
-  display: flex; align-items: center; gap: 5px;
-  white-space: nowrap;
+.btn-theater{
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  white-space:nowrap;
 }
 
+.btn-theater.active{
+  background:var(--accent);
+  border-color:var(--accent);
+}
+
+/* ─── GERÇEK / FALLBACK FULLSCREEN ─── */
+
+/*
+  iPhone Safari'de div/iframe için Fullscreen API
+  kısıtlı olduğundan video alanı için fullscreen fallback.
+*/
+.video-main-container.crex-fullscreen{
+  position:fixed !important;
+  left:0 !important;
+  top:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  width:100vw !important;
+  width:100dvw !important;
+  height:100vh !important;
+  height:100dvh !important;
+  min-height:0 !important;
+  z-index:99999 !important;
+  background:#000 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border-radius:0 !important;
+}
+
+.video-main-container.crex-fullscreen iframe,
+.video-main-container.crex-fullscreen .plyr-container-box{
+  width:100% !important;
+  height:100% !important;
+}
+
+.video-main-container.crex-fullscreen .plyr{
+  width:100% !important;
+  height:100% !important;
+}
+
+.video-main-container.crex-fullscreen .plyr__video-wrapper{
+  width:100% !important;
+  height:100% !important;
+}
+
+body.crex-fullscreen-active{
+  overflow:hidden !important;
+  width:100%;
+  height:100%;
+  position:fixed;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+}
+
+/* iPhone safe area */
+.video-main-container.crex-fullscreen{
+  padding-top:env(safe-area-inset-top);
+  padding-right:env(safe-area-inset-right);
+  padding-bottom:env(safe-area-inset-bottom);
+  padding-left:env(safe-area-inset-left);
+}
+
+.video-main-container.crex-fullscreen iframe{
+  border:0;
+}
+
+/* Header'ı fullscreen sırasında gizle */
+body.crex-fullscreen-active nav{
+  display:none !important;
+}
+
+/* Plyr fullscreen içindeyken */
+.plyr--fullscreen-active{
+  z-index:100000 !important;
+}
+
+/* ─── NOW HEADER ─── */
 .now-header{
   padding:10px 16px;
-  background: rgba(2, 6, 18, 0.95);
+  background:rgba(2,6,18,0.95);
   border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:10px;
-  flex-shrink:0; min-height:60px; z-index:5;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+  min-height:60px;
+  z-index:5;
 }
+
 .now-logo{
-  width:40px;height:40px;border-radius:8px;
-  background: rgba(255, 255, 255, 0.98);
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.98);
   border:1px solid rgba(255,255,255,0.5);
-  display:none; align-items:center;justify-content:center;
-  overflow:hidden;padding:4px;flex-shrink:0;
-}
-.now-logo img{ max-width:100%;max-height:100%;object-fit:contain; }
-.now-info{flex:1; display:flex; align-items:center; gap:8px; flex-wrap: nowrap; overflow:hidden;}
-.now-ch-name{ font-family:'Barlow Condensed',sans-serif; font-size:18px;font-weight:800;letter-spacing:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
-.now-badges{display:flex;gap:8px;margin-left:auto}
-.badge{ padding:4px 8px;border-radius:6px; font-size:10px;font-weight:700;letter-spacing:1px; }
-.badge-live{background:var(--accent-glow);color:var(--accent);border:1px solid var(--border2);display:flex;align-items:center;gap:4px}
-
-.video-wrap{ flex:1;background:#000;position:relative;overflow:hidden; z-index:5; display:flex; align-items:center; justify-content:center; }
-iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none; background:#000; }
-.vid-overlay{ position:absolute;inset:0; background: rgba(1, 3, 8, 0.95); z-index:10; }
-
-.plyr { height: 100% !important; width: 100% !important; }
-.plyr__video-wrapper { height: 100% !important; display: flex; align-items: center; justify-content: center; }
-.plyr video { object-fit: contain; }
-
-/* Yüklenme Ekranı */
-.skeleton-loader {
-  position: absolute; inset: 0;
-  background: rgba(6, 12, 28, 0.95);
-  z-index: 15;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 20px;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-.skeleton-loader.active { opacity: 1; pointer-events: auto; }
-
-.glass-card {
-  width: min(85%, 480px);
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  display: flex; flex-direction: column; gap: 16px; align-items: center;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  padding:4px;
+  flex-shrink:0;
 }
 
-.skeleton-box {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+.now-logo img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
 }
-.sk-logo { width: 64px; height: 64px; border-radius: 12px; }
-.sk-title { width: 60%; height: 20px; }
-.sk-subtitle { width: 40%; height: 12px; }
-.sk-bar { width: 100%; height: 6px; border-radius: 3px; margin-top: 10px; }
 
-/* ─── MOBİL UYUMLULUK ─── */
+.now-info{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:nowrap;
+  overflow:hidden;
+}
+
+.now-ch-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:1px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.now-badges{
+  display:flex;
+  gap:8px;
+  margin-left:auto
+}
+
+.badge{
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.badge-live{
+  background:var(--accent-glow);
+  color:var(--accent);
+  border:1px solid var(--border2);
+  display:flex;
+  align-items:center;
+  gap:4px
+}
+
+/* ─── VIDEO ─── */
+.video-wrap{
+  flex:1;
+  background:#000;
+  position:relative;
+  overflow:hidden;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+iframe,
+.plyr-container-box{
+  width:100%;
+  height:100%;
+  border:none;
+  display:none;
+  background:#000;
+}
+
+.vid-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(1,3,8,0.95);
+  z-index:10;
+}
+
+.plyr{
+  height:100% !important;
+  width:100% !important;
+}
+
+.plyr__video-wrapper{
+  height:100% !important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.plyr video{
+  object-fit:contain;
+}
+
+/* Fullscreen HLS video */
+.plyr video{
+  max-width:100%;
+  max-height:100%;
+}
+
+/* ─── YÜKLENME ─── */
+.skeleton-loader{
+  position:absolute;
+  inset:0;
+  background:rgba(6,12,28,0.95);
+  z-index:15;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.2s ease;
+}
+
+.skeleton-loader.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.glass-card{
+  width:min(85%,480px);
+  padding:30px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:16px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  align-items:center;
+}
+
+.skeleton-box{
+  background:rgba(255,255,255,0.08);
+  border-radius:8px;
+}
+
+.sk-logo{
+  width:64px;
+  height:64px;
+  border-radius:12px;
+}
+
+.sk-title{
+  width:60%;
+  height:20px;
+}
+
+.sk-subtitle{
+  width:40%;
+  height:12px;
+}
+
+.sk-bar{
+  width:100%;
+  height:6px;
+  border-radius:3px;
+  margin-top:10px;
+}
+
+/* ─── MOBİL ─── */
 @media(max-width:768px){
-  .layout{ grid-template-columns:1fr; grid-template-rows: auto 1fr; height: calc(100vh - 58px); }
-  .layout.theater-active { grid-template-columns: 1fr; grid-template-rows: calc(100vh - 58px) 0px; }
-  .ch-sidebar{ flex: 1; height: auto; max-height: none; border-right:none; order:2; position: relative; }
-  .layout.theater-active .ch-sidebar { transform: translateY(100%); max-height: 0px; opacity: 0; padding: 0; }
-  .player-area{ order:1; height: auto; }
-  nav{padding:0 14px}
-  .nav-logo{ width: auto; }
-  .nav-search{ max-width: 140px; margin: 0 0 0 auto; }
-  .nav-spacer { width: auto; }
+
+  .layout{
+    grid-template-columns:1fr;
+    grid-template-rows:auto 1fr;
+    height:calc(100vh - 58px);
+    height:calc(100dvh - 58px);
+  }
+
+  .layout.theater-active{
+    grid-template-columns:1fr;
+    grid-template-rows:calc(100vh - 58px) 0px;
+    grid-template-rows:calc(100dvh - 58px) 0px;
+  }
+
+  .ch-sidebar{
+    flex:1;
+    height:auto;
+    max-height:none;
+    border-right:none;
+    order:2;
+    position:relative;
+  }
+
+  .layout.theater-active .ch-sidebar{
+    transform:translateY(100%);
+    max-height:0px;
+    opacity:0;
+    padding:0;
+  }
+
+  .player-area{
+    order:1;
+    height:auto;
+  }
+
+  nav{
+    padding:0 14px;
+  }
+
+  .nav-logo{
+    width:auto;
+  }
+
+  .nav-search{
+    max-width:140px;
+    margin:0 0 0 auto;
+  }
+
+  .nav-spacer{
+    width:auto;
+  }
+
+  /*
+    iPhone fullscreen fallback.
+    Video alanı header dahil tüm ekranı kaplar.
+  */
+  .video-main-container.crex-fullscreen{
+    height:100vh !important;
+    height:100dvh !important;
+    width:100vw !important;
+    width:100dvw !important;
+  }
+
+  .video-main-container.crex-fullscreen .plyr video{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+  }
+}
+
+/* Küçük ekran yatay kullanım */
+@media(max-width:768px) and (orientation:landscape){
+
+  .video-main-container.crex-fullscreen{
+    height:100vh !important;
+    height:100dvh !important;
+    width:100vw !important;
+    width:100dvw !important;
+  }
 }
 </style>
 </head>
+
 <body>
 
 <div class="liquid-bg"></div>
@@ -501,61 +948,126 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
   <div class="nav-logo">
     <img src="https://resmim.net/cdn/2026/08/26/Ex1rvD.png" alt="CREX Logo" />
   </div>
+
   <div class="nav-search">
     <span class="search-icon">🔍</span>
-    <input type="text" placeholder="Kanal ara..." id="searchInput" oninput="filterChannels(this.value)"/>
+    <input
+      type="text"
+      placeholder="Kanal ara..."
+      id="searchInput"
+      oninput="filterChannels(this.value)"
+    />
   </div>
-  <div class="nav-spacer"></div> 
+
+  <div class="nav-spacer"></div>
 </nav>
 
 <div class="layout" id="mainLayout">
 
   <div class="ch-sidebar">
+
     <div class="domain-alert">
       <div class="domain-alert-text">
         <span class="domain-icon">📢</span>
         <div>
-          Bir sonraki alan adımız <span class="domain-link" onclick="window.open('https:crex2.vercel.app', '_blank')">crex2.vercel.app</span> olacaktır.
+          Bir sonraki alan adımız
+          <span
+            class="domain-link"
+            onclick="window.open('https:crex2.vercel.app', '_blank')"
+          >
+            crex2.vercel.app
+          </span>
+          olacaktır.
         </div>
       </div>
     </div>
 
     <div class="main-tabs-wrap">
-      <button class="main-tab-btn active" id="tabChannelsBtn" onclick="switchMainTab('channels')">📺 Kanallar</button>
-      <button class="main-tab-btn" id="tabMatchesBtn" onclick="switchMainTab('matches')">⚽ Maçlar</button>
+      <button
+        class="main-tab-btn active"
+        id="tabChannelsBtn"
+        onclick="switchMainTab('channels')"
+      >
+        📺 Kanallar
+      </button>
+
+      <button
+        class="main-tab-btn"
+        id="tabMatchesBtn"
+        onclick="switchMainTab('matches')"
+      >
+        ⚽ Maçlar
+      </button>
     </div>
 
     <div class="country-filter-wrap" id="countryFilters"></div>
+
     <div class="ch-list" id="chList"></div>
-    
+
     <div class="adv-panel">
-      <a href="mailto:crexproton@proton.me?subject=Reklam%20Basvurusu" class="adv-link">
+      <a
+        href="mailto:crexproton@proton.me?subject=Reklam%20Basvurusu"
+        class="adv-link"
+      >
         <div class="adv-box">
           Buraya Reklam Verebilirsiniz
         </div>
       </a>
     </div>
+
   </div>
 
   <div class="player-area">
+
     <div class="now-header">
+
       <div class="now-logo" id="nowLogo"></div>
+
       <div class="now-info">
-        <div class="now-ch-name" id="nowName"></div>
-        <button class="btn-theater" id="theaterBtn" onclick="toggleTheaterMode()" style="display:none;">
-          <span>⛶</span><span class="btn-text">Tam Ekran</span>
+
+        <div
+          class="now-ch-name"
+          id="nowName"
+        ></div>
+
+        <button
+          class="btn-theater"
+          id="theaterBtn"
+          onclick="toggleTheaterMode()"
+          style="display:none;"
+          type="button"
+        >
+          <span>⛶</span>
+          <span class="btn-text">Tam Ekran</span>
         </button>
+
       </div>
+
       <div class="now-badges">
-        <div class="badge badge-live"><div class="live-dot"></div>CANLI</div>
+        <div class="badge badge-live">
+          <div class="live-dot"></div>
+          CANLI
+        </div>
       </div>
+
     </div>
 
     <div class="content-body-flex">
-      <div class="video-main-container" id="videoWrap">
-        <div class="vid-overlay" id="vidOverlay"></div>
-        
-        <div class="skeleton-loader" id="skeletonLoader">
+
+      <div
+        class="video-main-container"
+        id="videoWrap"
+      >
+
+        <div
+          class="vid-overlay"
+          id="vidOverlay"
+        ></div>
+
+        <div
+          class="skeleton-loader"
+          id="skeletonLoader"
+        >
           <div class="glass-card">
             <div class="skeleton-box sk-logo"></div>
             <div class="skeleton-box sk-title"></div>
@@ -564,12 +1076,31 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
           </div>
         </div>
 
-        <iframe id="embedPlayer" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-        
-        <div id="plyrWrapper" class="plyr-container-box">
-          <video id="hlsPlayer" controls autoplay playsinline></video>
+        <iframe
+          id="embedPlayer"
+          src=""
+          allowfullscreen
+          webkitallowfullscreen
+          mozallowfullscreen
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+          playsinline
+        ></iframe>
+
+        <div
+          id="plyrWrapper"
+          class="plyr-container-box"
+        >
+          <video
+            id="hlsPlayer"
+            controls
+            autoplay
+            playsinline
+            webkit-playsinline
+          ></video>
         </div>
+
       </div>
+
     </div>
 
   </div>
@@ -577,373 +1108,1779 @@ iframe, .plyr-container-box{ width:100%; height:100%; border:none; display:none;
 </div>
 
 <script>
+
 let hlsInstance = null;
 let selectedChannelObj = null;
 let plyrInstance = null;
 
-function initPlyr() {
-  if (!plyrInstance) {
-    plyrInstance = new Plyr('#hlsPlayer', {
-      controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-      tooltips: { controls: true, seek: true }
-    });
+/* ─────────────────────────────────────────
+   iOS / FULLSCREEN YARDIMCILARI
+───────────────────────────────────────── */
+
+function isIOSDevice(){
+
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (
+      navigator.platform === 'MacIntel' &&
+      navigator.maxTouchPoints > 1
+    )
+  );
+}
+
+function isFullscreenActive(){
+
+  const videoWrap = document.getElementById('videoWrap');
+
+  return (
+    document.fullscreenElement === videoWrap ||
+    document.webkitFullscreenElement === videoWrap ||
+    videoWrap.classList.contains('crex-fullscreen')
+  );
+}
+
+function setScreenHeightVariable(){
+
+  document.documentElement.style.setProperty(
+    '--crex-screen-height',
+    window.innerHeight + 'px'
+  );
+}
+
+setScreenHeightVariable();
+
+window.addEventListener(
+  'resize',
+  setScreenHeightVariable,
+  { passive:true }
+);
+
+window.addEventListener(
+  'orientationchange',
+  function(){
+    setTimeout(setScreenHeightVariable, 250);
+  },
+  { passive:true }
+);
+
+
+/* ─────────────────────────────────────────
+   PLYR
+───────────────────────────────────────── */
+
+function initPlyr(){
+
+  if(!plyrInstance){
+
+    plyrInstance = new Plyr(
+      '#hlsPlayer',
+      {
+        controls:[
+          'play-large',
+          'play',
+          'progress',
+          'current-time',
+          'mute',
+          'volume',
+          'fullscreen'
+        ],
+
+        tooltips:{
+          controls:true,
+          seek:true
+        },
+
+        fullscreen:{
+          enabled:true,
+          fallback:true,
+          iosNative:false
+        }
+      }
+    );
+
+    /*
+      Plyr fullscreen durumunu kendi butonuyla açtığında
+      bizim body kilidini de yönetiyoruz.
+    */
+    plyrInstance.on(
+      'enterfullscreen',
+      function(){
+
+        document.body.classList.add(
+          'crex-fullscreen-active'
+        );
+      }
+    );
+
+    plyrInstance.on(
+      'exitfullscreen',
+      function(){
+
+        /*
+          Plyr kendi fallback fullscreen'inden çıkınca
+          bizim CSS fallback'ini de temizle.
+        */
+        document.body.classList.remove(
+          'crex-fullscreen-active'
+        );
+
+        document
+          .getElementById('videoWrap')
+          .classList.remove('crex-fullscreen');
+      }
+    );
   }
 }
 
-function switchMainTab(tab) {
-  activeTab = tab;
-  document.getElementById('tabChannelsBtn').classList.toggle('active', tab === 'channels');
-  document.getElementById('tabMatchesBtn').classList.toggle('active', tab === 'matches');
-  
-  const countryFilters = document.getElementById('countryFilters');
-  const searchInput = document.getElementById('searchInput');
 
-  if (tab === 'matches') {
+/* ─────────────────────────────────────────
+   TABLAR
+───────────────────────────────────────── */
+
+function switchMainTab(tab){
+
+  activeTab = tab;
+
+  document
+    .getElementById('tabChannelsBtn')
+    .classList.toggle(
+      'active',
+      tab === 'channels'
+    );
+
+  document
+    .getElementById('tabMatchesBtn')
+    .classList.toggle(
+      'active',
+      tab === 'matches'
+    );
+
+  const countryFilters =
+    document.getElementById('countryFilters');
+
+  const searchInput =
+    document.getElementById('searchInput');
+
+  if(tab === 'matches'){
+
     countryFilters.style.display = 'none';
-    if(searchInput) searchInput.parentElement.style.display = 'none';
+
+    if(searchInput){
+      searchInput.parentElement.style.display = 'none';
+    }
+
     renderMatchesList();
-  } else {
+
+  }else{
+
     countryFilters.style.display = 'flex';
-    if(searchInput) searchInput.parentElement.style.display = 'flex';
+
+    if(searchInput){
+      searchInput.parentElement.style.display = 'flex';
+    }
+
     renderCountryFilters();
     renderList();
   }
 }
 
-function renderCountryFilters() {
-  const container = document.getElementById('countryFilters');
+
+/* ─────────────────────────────────────────
+   ÜLKE FİLTRELERİ
+───────────────────────────────────────── */
+
+function renderCountryFilters(){
+
+  const container =
+    document.getElementById('countryFilters');
+
   container.innerHTML = '';
-  const fragment = document.createDocumentFragment();
+
+  const fragment =
+    document.createDocumentFragment();
+
   countries.forEach(country => {
-    const btn = document.createElement('button');
-    btn.className = `country-btn ${currentCategory === country.code ? 'active' : ''}`;
-    btn.innerHTML = `<span class="flag-icon">${country.flag}</span> ${country.name}`;
+
+    const btn =
+      document.createElement('button');
+
+    btn.className =
+      `country-btn ${
+        currentCategory === country.code
+          ? 'active'
+          : ''
+      }`;
+
+    btn.innerHTML =
+      `<span class="flag-icon">${country.flag}</span> ${country.name}`;
+
     btn.onclick = () => {
+
       currentCategory = country.code;
+
       renderCountryFilters();
       renderList();
     };
+
     fragment.appendChild(btn);
   });
+
   container.appendChild(fragment);
 }
 
-function renderMatchesList() {
-  const list = document.getElementById('chList');
+
+/* ─────────────────────────────────────────
+   MAÇ LİSTESİ
+───────────────────────────────────────── */
+
+function renderMatchesList(){
+
+  const list =
+    document.getElementById('chList');
+
   list.innerHTML = '';
-  const fragment = document.createDocumentFragment();
-  
+
+  const fragment =
+    document.createDocumentFragment();
+
   dailyMatchesByDate.forEach(group => {
-    const dateHeader = document.createElement('div');
-    dateHeader.className = 'date-group-header';
-    dateHeader.textContent = group.date;
+
+    const dateHeader =
+      document.createElement('div');
+
+    dateHeader.className =
+      'date-group-header';
+
+    dateHeader.textContent =
+      group.date;
+
     fragment.appendChild(dateHeader);
 
     group.matches.forEach(match => {
-      if (match.league) {
-        const leagueHeader = document.createElement('div');
-        leagueHeader.className = 'league-group-header';
-        leagueHeader.textContent = match.league;
+
+      if(match.league){
+
+        const leagueHeader =
+          document.createElement('div');
+
+        leagueHeader.className =
+          'league-group-header';
+
+        leagueHeader.textContent =
+          match.league;
+
         fragment.appendChild(leagueHeader);
       }
 
-      const card = document.createElement('div');
-      card.className = 'match-card';
+      const card =
+        document.createElement('div');
 
-      let firstChannelId = (match.channelIds && match.channelIds.length > 0) ? match.channelIds[0] : null;
+      card.className =
+        'match-card';
+
+      let firstChannelId =
+        (
+          match.channelIds &&
+          match.channelIds.length > 0
+        )
+          ? match.channelIds[0]
+          : null;
 
       let cardHtml = '';
-      if (match.awayTeam) {
+
+      if(match.awayTeam){
+
         cardHtml = `
-          <div class="match-main-row" ${firstChannelId ? `onclick="playMatchChannel(${firstChannelId})"` : ''} title="Yayını Başlat">
+          <div
+            class="match-main-row"
+            ${
+              firstChannelId
+                ? `onclick="playMatchChannel(${firstChannelId})"`
+                : ''
+            }
+            title="Yayını Başlat"
+          >
+
             <div class="match-team-side">
-              ${match.homeLogo ? `<img src="${match.homeLogo}" alt="${match.homeTeam}" style="width:20px;height:20px;object-fit:contain;">` : ''}
-              <span class="match-team-name">${match.homeTeam}</span>
+
+              ${
+                match.homeLogo
+                  ? `
+                    <img
+                      src="${match.homeLogo}"
+                      alt="${match.homeTeam}"
+                      style="
+                        width:20px;
+                        height:20px;
+                        object-fit:contain;
+                      "
+                    >
+                  `
+                  : ''
+              }
+
+              <span class="match-team-name">
+                ${match.homeTeam}
+              </span>
+
             </div>
+
             <div class="match-center-info">
-              <span class="match-time">${match.time}</span>
-              <span class="match-vs">VS</span>
+
+              <span class="match-time">
+                ${match.time}
+              </span>
+
+              <span class="match-vs">
+                VS
+              </span>
+
             </div>
+
             <div class="match-team-side right">
-              <span class="match-team-name">${match.awayTeam}</span>
-              ${match.awayLogo ? `<img src="${match.awayLogo}" alt="${match.awayTeam}" style="width:20px;height:20px;object-fit:contain;">` : ''}
+
+              <span class="match-team-name">
+                ${match.awayTeam}
+              </span>
+
+              ${
+                match.awayLogo
+                  ? `
+                    <img
+                      src="${match.awayLogo}"
+                      alt="${match.awayTeam}"
+                      style="
+                        width:20px;
+                        height:20px;
+                        object-fit:contain;
+                      "
+                    >
+                  `
+                  : ''
+              }
+
             </div>
+
           </div>
         `;
-      } else {
+
+      }else{
+
         cardHtml = `
-          <div class="match-main-row" ${firstChannelId ? `onclick="playMatchChannel(${firstChannelId})"` : ''} title="Yayını Başlat" style="justify-content: center; gap: 12px;">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <span class="match-time" style="margin-bottom: 2px;">${match.time}</span>
-              <span class="match-team-name" style="font-size: 13px;">${match.homeTeam}</span>
+          <div
+            class="match-main-row"
+            ${
+              firstChannelId
+                ? `onclick="playMatchChannel(${firstChannelId})"`
+                : ''
+            }
+            title="Yayını Başlat"
+            style="
+              justify-content:center;
+              gap:12px;
+            "
+          >
+
+            <div
+              style="
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+              "
+            >
+
+              <span
+                class="match-time"
+                style="margin-bottom:2px;"
+              >
+                ${match.time}
+              </span>
+
+              <span
+                class="match-team-name"
+                style="font-size:13px;"
+              >
+                ${match.homeTeam}
+              </span>
+
             </div>
+
           </div>
         `;
       }
 
-      if (match.channelIds && match.channelIds.length > 0) {
-        cardHtml += `<div class="match-alternatives">`;
-        match.channelIds.forEach((chId, index) => {
-          const foundCh = channels.find(c => c.id === chId);
-          const btnLabel = foundCh ? foundCh.name : `Alternatif ${index + 1}`;
-          cardHtml += `<button class="alt-stream-btn" onclick="playMatchChannel(${chId})">▶ ${btnLabel}</button>`;
-        });
-        cardHtml += `</div>`;
+      if(
+        match.channelIds &&
+        match.channelIds.length > 0
+      ){
+
+        cardHtml += `
+          <div class="match-alternatives">
+        `;
+
+        match.channelIds.forEach(
+          (chId,index) => {
+
+            const foundCh =
+              channels.find(
+                c => c.id === chId
+              );
+
+            const btnLabel =
+              foundCh
+                ? foundCh.name
+                : `Alternatif ${index + 1}`;
+
+            cardHtml += `
+              <button
+                class="alt-stream-btn"
+                onclick="playMatchChannel(${chId})"
+              >
+                ▶ ${btnLabel}
+              </button>
+            `;
+          }
+        );
+
+        cardHtml += `
+          </div>
+        `;
       }
-      card.innerHTML = cardHtml;
+
+      card.innerHTML =
+        cardHtml;
+
       fragment.appendChild(card);
     });
   });
+
   list.appendChild(fragment);
 }
 
-function playMatchChannel(chId) {
-  const targetChannel = channels.find(c => c.id === chId);
-  if (targetChannel) selectChannel(targetChannel);
+
+/* ─────────────────────────────────────────
+   MAÇ KANALI
+───────────────────────────────────────── */
+
+function playMatchChannel(chId){
+
+  const targetChannel =
+    channels.find(
+      c => c.id === chId
+    );
+
+  if(targetChannel){
+    selectChannel(targetChannel);
+  }
 }
+
+
+/* ─────────────────────────────────────────
+   KANAL LİSTESİ
+───────────────────────────────────────── */
 
 function renderList(){
-  if (activeTab !== 'channels') return;
-  const list = document.getElementById('chList');
-  let filtered = channels.filter(c => c.cat === currentCategory && (!currentSearch || c.name.toLowerCase().includes(currentSearch.toLowerCase())));
 
-  list.innerHTML='';
-  const fragment = document.createDocumentFragment();
-  
+  if(activeTab !== 'channels'){
+    return;
+  }
+
+  const list =
+    document.getElementById('chList');
+
+  let filtered =
+    channels.filter(
+      c =>
+        c.cat === currentCategory &&
+        (
+          !currentSearch ||
+          c.name
+            .toLowerCase()
+            .includes(
+              currentSearch.toLowerCase()
+            )
+        )
+    );
+
+  list.innerHTML = '';
+
+  const fragment =
+    document.createDocumentFragment();
+
   filtered.forEach(c => {
-    const countryObj = countries.find(item => item.code === c.cat);
-    const flagSymbol = countryObj ? countryObj.flag : "🌐";
 
-    const card = document.createElement('div');
-    card.className = 'ch-card' + (activeId === c.id ? ' active' : '');
+    const countryObj =
+      countries.find(
+        item => item.code === c.cat
+      );
+
+    const flagSymbol =
+      countryObj
+        ? countryObj.flag
+        : "🌐";
+
+    const card =
+      document.createElement('div');
+
+    card.className =
+      'ch-card' +
+      (
+        activeId === c.id
+          ? ' active'
+          : ''
+      );
+
     card.innerHTML = `
-      <div class="ch-card-flag">${flagSymbol}</div>
+      <div class="ch-card-flag">
+        ${flagSymbol}
+      </div>
+
       <div class="ch-logo">
-        <img src="${c.logo}" alt="${c.name}" loading="lazy" onerror="this.onerror=null; this.src='${fallbackLogo}';"/>
+
+        <img
+          src="${c.logo}"
+          alt="${c.name}"
+          loading="lazy"
+          onerror="
+            this.onerror=null;
+            this.src='${fallbackLogo}';
+          "
+        />
+
       </div>
+
       <div class="ch-info">
-        <div class="ch-name">${c.name}</div>
+
+        <div class="ch-name">
+          ${c.name}
+        </div>
+
       </div>
+
       <div class="ch-live-badge"></div>
     `;
-    card.onclick = () => selectChannel(c);
+
+    card.onclick =
+      () => selectChannel(c);
+
     fragment.appendChild(card);
   });
+
   list.appendChild(fragment);
 }
 
+
+/* ─────────────────────────────────────────
+   KANAL SEÇ
+───────────────────────────────────────── */
+
 function selectChannel(c){
+
+  /*
+    Önce varsa fullscreen'den çık.
+    Yeni kanal seçildiğinde görüntünün normal
+    player alanına dönmesini sağlar.
+  */
+  exitCrexFullscreen();
+
   activeId = c.id;
-  selectedChannelObj = c; 
-  if (activeTab === 'channels') renderList();
 
-  const logoEl = document.getElementById('nowLogo');
+  selectedChannelObj = c;
+
+  if(activeTab === 'channels'){
+    renderList();
+  }
+
+  const logoEl =
+    document.getElementById('nowLogo');
+
   logoEl.style.display = 'flex';
-  logoEl.innerHTML = `<img src="${c.logo}" alt="${c.name}" onerror="this.onerror=null; this.src='${fallbackLogo}';"/>`;
-  document.getElementById('nowName').textContent = c.name;
-  document.getElementById('theaterBtn').style.display = 'flex';
-  document.getElementById('vidOverlay').style.display = 'none';
-  
-  const iframePlayer = document.getElementById('embedPlayer');
-  const plyrWrapper = document.getElementById('plyrWrapper');
-  const hlsPlayer = document.getElementById('hlsPlayer');
 
-  if (hlsInstance) {
+  logoEl.innerHTML = `
+    <img
+      src="${c.logo}"
+      alt="${c.name}"
+      onerror="
+        this.onerror=null;
+        this.src='${fallbackLogo}';
+      "
+    />
+  `;
+
+  document.getElementById(
+    'nowName'
+  ).textContent = c.name;
+
+  document.getElementById(
+    'theaterBtn'
+  ).style.display = 'flex';
+
+  document.getElementById(
+    'vidOverlay'
+  ).style.display = 'none';
+
+  const iframePlayer =
+    document.getElementById(
+      'embedPlayer'
+    );
+
+  const plyrWrapper =
+    document.getElementById(
+      'plyrWrapper'
+    );
+
+  const hlsPlayer =
+    document.getElementById(
+      'hlsPlayer'
+    );
+
+  if(hlsInstance){
+
     hlsInstance.destroy();
+
     hlsInstance = null;
   }
-  
+
   hlsPlayer.pause();
+
   hlsPlayer.src = "";
-  plyrWrapper.style.display = "none";
-  iframePlayer.style.display = "none";
+
+  plyrWrapper.style.display =
+    "none";
+
+  iframePlayer.style.display =
+    "none";
+
   iframePlayer.src = "";
 
   startActualStream(c);
 }
 
-function showSkeleton() { document.getElementById('skeletonLoader').classList.add('active'); }
-function hideSkeleton() { document.getElementById('skeletonLoader').classList.remove('active'); }
 
-function startActualStream(c) {
+/* ─────────────────────────────────────────
+   LOADING
+───────────────────────────────────────── */
+
+function showSkeleton(){
+
+  document
+    .getElementById('skeletonLoader')
+    .classList.add('active');
+}
+
+function hideSkeleton(){
+
+  document
+    .getElementById('skeletonLoader')
+    .classList.remove('active');
+}
+
+
+/* ─────────────────────────────────────────
+   YAYINI BAŞLAT
+───────────────────────────────────────── */
+
+function startActualStream(c){
+
   showSkeleton();
-  const iframePlayer = document.getElementById('embedPlayer');
-  const plyrWrapper = document.getElementById('plyrWrapper');
-  const hlsPlayer = document.getElementById('hlsPlayer');
 
-  if (c.stream.includes('.m3u8')) {
-    iframePlayer.removeAttribute('sandbox');
-    plyrWrapper.style.display = "block";
-    initPlyr(); 
-    
-    if (Hls.isSupported()) {
-      hlsInstance = new Hls();
-      hlsInstance.loadSource(c.stream);
-      hlsInstance.attachMedia(hlsPlayer);
-      hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
-        hlsPlayer.play().catch(() => {});
-        hideSkeleton();
-      });
-      hlsInstance.on(Hls.Events.ERROR, function() { hideSkeleton(); });
-    } else if (hlsPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-      hlsPlayer.src = c.stream;
-      hlsPlayer.play().catch(() => {});
+  const iframePlayer =
+    document.getElementById(
+      'embedPlayer'
+    );
+
+  const plyrWrapper =
+    document.getElementById(
+      'plyrWrapper'
+    );
+
+  const hlsPlayer =
+    document.getElementById(
+      'hlsPlayer'
+    );
+
+  if(c.stream.includes('.m3u8')){
+
+    iframePlayer.removeAttribute(
+      'sandbox'
+    );
+
+    plyrWrapper.style.display =
+      "block";
+
+    initPlyr();
+
+    if(Hls.isSupported()){
+
+      hlsInstance =
+        new Hls();
+
+      hlsInstance.loadSource(
+        c.stream
+      );
+
+      hlsInstance.attachMedia(
+        hlsPlayer
+      );
+
+      hlsInstance.on(
+        Hls.Events.MANIFEST_PARSED,
+        function(){
+
+          hlsPlayer
+            .play()
+            .catch(() => {});
+
+          hideSkeleton();
+        }
+      );
+
+      hlsInstance.on(
+        Hls.Events.ERROR,
+        function(){
+
+          hideSkeleton();
+        }
+      );
+
+    }else if(
+      hlsPlayer.canPlayType(
+        'application/vnd.apple.mpegurl'
+      )
+    ){
+
+      hlsPlayer.src =
+        c.stream;
+
+      hlsPlayer
+        .play()
+        .catch(() => {});
+
       hideSkeleton();
     }
-  } else {
-    iframePlayer.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
-    iframePlayer.style.display = "block";
-    iframePlayer.src = c.stream; 
-    iframePlayer.onload = function() { hideSkeleton(); };
-    setTimeout(() => { hideSkeleton(); }, 2500);
+
+  }else{
+
+    /*
+      Fullscreen için iframe'e gerekli
+      izinleri veriyoruz.
+    */
+    iframePlayer.setAttribute(
+      'allow',
+      'autoplay; encrypted-media; fullscreen; picture-in-picture'
+    );
+
+    iframePlayer.setAttribute(
+      'allowfullscreen',
+      ''
+    );
+
+    iframePlayer.setAttribute(
+      'webkitallowfullscreen',
+      ''
+    );
+
+    iframePlayer.setAttribute(
+      'mozallowfullscreen',
+      ''
+    );
+
+    iframePlayer.setAttribute(
+      'sandbox',
+      'allow-scripts allow-same-origin allow-forms allow-presentation'
+    );
+
+    iframePlayer.style.display =
+      "block";
+
+    iframePlayer.src =
+      c.stream;
+
+    iframePlayer.onload =
+      function(){
+
+        hideSkeleton();
+      };
+
+    setTimeout(
+      () => {
+        hideSkeleton();
+      },
+      2500
+    );
   }
 }
 
-function toggleTheaterMode() {
-  const layout = document.getElementById('mainLayout');
-  const btn = document.getElementById('theaterBtn');
-  const btnText = btn.querySelector('.btn-text');
-  
-  layout.classList.toggle('theater-active');
-  btn.classList.toggle('active');
-  
-  if(layout.classList.contains('theater-active')) {
-    if(btnText) btnText.textContent = "Normal";
-  } else {
-    if(btnText) btnText.textContent = "Sinema";
+
+/* ─────────────────────────────────────────
+   GERÇEK FULLSCREEN SİSTEMİ
+───────────────────────────────────────── */
+
+async function enterCrexFullscreen(){
+
+  const videoWrap =
+    document.getElementById(
+      'videoWrap'
+    );
+
+  const hlsPlayer =
+    document.getElementById(
+      'hlsPlayer'
+    );
+
+  const iframePlayer =
+    document.getElementById(
+      'embedPlayer'
+    );
+
+  /*
+    1. HLS / HTML5 video
+    iPhone'da native WebKit fullscreen.
+  */
+  if(
+    plyrInstance &&
+    hlsPlayer.src &&
+    (
+      isIOSDevice() ||
+      typeof videoWrap.requestFullscreen !== 'function'
+    )
+  ){
+
+    try{
+
+      if(
+        hlsPlayer.webkitSupportsFullscreen &&
+        typeof hlsPlayer.webkitEnterFullscreen === 'function'
+      ){
+
+        hlsPlayer.webkitEnterFullscreen();
+
+        return;
+      }
+
+    }catch(e){
+      console.log(
+        'iOS native fullscreen fallback:',
+        e
+      );
+    }
+  }
+
+  /*
+    2. Desktop / Android modern tarayıcılar
+    Gerçek Fullscreen API.
+  */
+  if(
+    !isIOSDevice() &&
+    typeof videoWrap.requestFullscreen === 'function'
+  ){
+
+    try{
+
+      await videoWrap.requestFullscreen();
+
+      document.body.classList.add(
+        'crex-fullscreen-active'
+      );
+
+      return;
+
+    }catch(e){
+
+      console.log(
+        'Fullscreen API başarısız:',
+        e
+      );
+    }
+  }
+
+  /*
+    3. iPhone/iPad veya API desteklenmeyen
+    tarayıcılar için CSS fullscreen fallback.
+  */
+  videoWrap.classList.add(
+    'crex-fullscreen'
+  );
+
+  document.body.classList.add(
+    'crex-fullscreen-active'
+  );
+
+  setScreenHeightVariable();
+
+  /*
+    iPhone Safari'de ekran yönünü mümkünse
+    yatay kullanım için tarayıcıya bırakıyoruz.
+  */
+  setTimeout(
+    setScreenHeightVariable,
+    100
+  );
+
+  /*
+    iframe aktifse fullscreen iznini tekrar
+    garanti ediyoruz.
+  */
+  if(
+    iframePlayer.style.display !== 'none'
+  ){
+
+    iframePlayer.setAttribute(
+      'allow',
+      'autoplay; encrypted-media; fullscreen; picture-in-picture'
+    );
+
+    iframePlayer.setAttribute(
+      'allowfullscreen',
+      ''
+    );
   }
 }
+
+
+/* ─────────────────────────────────────────
+   FULLSCREEN ÇIKIŞ
+───────────────────────────────────────── */
+
+async function exitCrexFullscreen(){
+
+  const videoWrap =
+    document.getElementById(
+      'videoWrap'
+    );
+
+  /*
+    Plyr native fullscreen aktifse.
+  */
+  if(
+    plyrInstance &&
+    plyrInstance.fullscreen &&
+    plyrInstance.fullscreen.active
+  ){
+
+    try{
+      plyrInstance.fullscreen.exit();
+    }catch(e){}
+  }
+
+  /*
+    Browser Fullscreen API.
+  */
+  try{
+
+    if(
+      document.fullscreenElement &&
+      document.exitFullscreen
+    ){
+
+      await document.exitFullscreen();
+
+    }else if(
+      document.webkitFullscreenElement &&
+      document.webkitExitFullscreen
+    ){
+
+      await document.webkitExitFullscreen();
+    }
+
+  }catch(e){
+    console.log(
+      'Fullscreen çıkış hatası:',
+      e
+    );
+  }
+
+  videoWrap.classList.remove(
+    'crex-fullscreen'
+  );
+
+  document.body.classList.remove(
+    'crex-fullscreen-active'
+  );
+
+  setScreenHeightVariable();
+}
+
+
+/* ─────────────────────────────────────────
+   TAM EKRAN BUTONU
+───────────────────────────────────────── */
+
+async function toggleTheaterMode(){
+
+  const videoWrap =
+    document.getElementById(
+      'videoWrap'
+    );
+
+  const btn =
+    document.getElementById(
+      'theaterBtn'
+    );
+
+  const btnText =
+    btn.querySelector(
+      '.btn-text'
+    );
+
+  /*
+    Zaten fullscreen ise çık.
+  */
+  if(isFullscreenActive()){
+
+    await exitCrexFullscreen();
+
+    if(btnText){
+      btnText.textContent =
+        "Tam Ekran";
+    }
+
+    btn.classList.remove(
+      'active'
+    );
+
+    return;
+  }
+
+  /*
+    Fullscreen'e gir.
+  */
+  await enterCrexFullscreen();
+
+  btn.classList.add(
+    'active'
+  );
+
+  if(btnText){
+    btnText.textContent =
+      "Normal";
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   FULLSCREEN EVENTLERİ
+───────────────────────────────────────── */
+
+document.addEventListener(
+  'fullscreenchange',
+  function(){
+
+    const videoWrap =
+      document.getElementById(
+        'videoWrap'
+      );
+
+    const btn =
+      document.getElementById(
+        'theaterBtn'
+      );
+
+    const btnText =
+      btn
+        ? btn.querySelector(
+            '.btn-text'
+          )
+        : null;
+
+    const active =
+      document.fullscreenElement ===
+      videoWrap;
+
+    if(active){
+
+      document.body.classList.add(
+        'crex-fullscreen-active'
+      );
+
+      if(btn){
+        btn.classList.add(
+          'active'
+        );
+      }
+
+      if(btnText){
+        btnText.textContent =
+          "Normal";
+      }
+
+    }else{
+
+      videoWrap.classList.remove(
+        'crex-fullscreen'
+      );
+
+      document.body.classList.remove(
+        'crex-fullscreen-active'
+      );
+
+      if(btn){
+        btn.classList.remove(
+          'active'
+        );
+      }
+
+      if(btnText){
+        btnText.textContent =
+          "Tam Ekran";
+      }
+    }
+  }
+);
+
+document.addEventListener(
+  'webkitfullscreenchange',
+  function(){
+
+    const videoWrap =
+      document.getElementById(
+        'videoWrap'
+      );
+
+    const active =
+      document.webkitFullscreenElement ===
+      videoWrap;
+
+    if(!active){
+
+      videoWrap.classList.remove(
+        'crex-fullscreen'
+      );
+
+      document.body.classList.remove(
+        'crex-fullscreen-active'
+      );
+    }
+  }
+);
+
+
+/* ─────────────────────────────────────────
+   iOS NATIVE VIDEO FULLSCREEN EVENTLERİ
+───────────────────────────────────────── */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function(){
+
+    const hlsPlayer =
+      document.getElementById(
+        'hlsPlayer'
+      );
+
+    if(!hlsPlayer){
+      return;
+    }
+
+    hlsPlayer.addEventListener(
+      'webkitbeginfullscreen',
+      function(){
+
+        document.body.classList.add(
+          'crex-fullscreen-active'
+        );
+
+        const btn =
+          document.getElementById(
+            'theaterBtn'
+          );
+
+        const btnText =
+          btn
+            ? btn.querySelector(
+                '.btn-text'
+              )
+            : null;
+
+        if(btn){
+          btn.classList.add(
+            'active'
+          );
+        }
+
+        if(btnText){
+          btnText.textContent =
+            "Normal";
+        }
+      }
+    );
+
+    hlsPlayer.addEventListener(
+      'webkitendfullscreen',
+      function(){
+
+        document.body.classList.remove(
+          'crex-fullscreen-active'
+        );
+
+        const btn =
+          document.getElementById(
+            'theaterBtn'
+          );
+
+        const btnText =
+          btn
+            ? btn.querySelector(
+                '.btn-text'
+              )
+            : null;
+
+        if(btn){
+          btn.classList.remove(
+            'active'
+          );
+        }
+
+        if(btnText){
+          btnText.textContent =
+            "Tam Ekran";
+        }
+
+        document
+          .getElementById('videoWrap')
+          .classList.remove(
+            'crex-fullscreen'
+          );
+      }
+    );
+  }
+);
+
+
+/* ─────────────────────────────────────────
+   ESC / BACK İÇİN
+───────────────────────────────────────── */
+
+document.addEventListener(
+  'keydown',
+  function(e){
+
+    if(e.key === 'Escape'){
+
+      if(
+        document
+          .getElementById('videoWrap')
+          .classList
+          .contains('crex-fullscreen')
+      ){
+
+        exitCrexFullscreen();
+      }
+    }
+  }
+);
+
+
+/* ─────────────────────────────────────────
+   ARAMA
+───────────────────────────────────────── */
 
 function filterChannels(q){
+
   currentSearch = q;
+
   renderList();
 }
 
-const countries = [{ code: "tr", name: "Türkiye", flag: "🇹🇷" }];
 
-const channels = [
-  {id:1,  name:"BeIN Sports 1",  cat:"tr", logo:"https://royaltv37.com/img/beinsports1.png", stream: "https://royaltv37.com/channel?id=zirve"},
-  {id:2,  name:"BeIN Sports 1 B",  cat:"tr", logo:"https://royaltv37.com/img/beinsports1.png", stream:"https://playersystem1.vercel.app/?kanal=beinsports1b"},
-  {id:3,  name:"BeIN Sports 1 C",  cat:"tr", logo:"https://royaltv37.com/img/beinsports1.png", stream:"https://playersystem1.vercel.app/?kanal=beinsports1c"},
-  {id:4,  name:"BeIN Sports 2",  cat:"tr", logo:"https://royaltv37.com/img/beinsports2.png", stream:"https://playersystem1.vercel.app/?kanal=beinsports2"},
-  {id:5,  name:"BeIN Sports 2 B",  cat:"tr", logo:"https://royaltv37.com/img/beinsports2.png", stream:"https://royaltv37.com/channel?id=b2"},
-  {id:6,  name:"BeIN Sports 2 C",  cat:"tr", logo:"https://royaltv37.com/img/beinsports2.png", stream:"https://playersystem1.vercel.app/?kanal=beinsports2"},
-  {id:7,  name:"BeIN Sports 3",  cat:"tr", logo:"https://royaltv37.com/img/beinsports3.png", stream:"https://royaltv37.com/channel?id=b3"},
-  {id:8,  name:"BeIN Sports 3 B",  cat:"tr", logo:"https://royaltv37.com/img/beinsports3.png", stream:"https://royaltv37.com/channel?id=beinsports3"},
-  {id:9,  name:"BeIN Sports 4",  cat:"tr", logo:"https://royaltv37.com/img/beinsports4.png", stream: "https://royaltv37.com/channel?id=b4"},
-  {id:10, name:"BeIN Sports 4 B",  cat:"tr", logo:"https://royaltv37.com/img/beinsports4.png", stream:"https://playersystem1.vercel.app/?kanal=beinsports4b"},
-  {id:11, name:"BeIN Sports 5",  cat:"tr", logo:"https://royaltv37.com/img/beinsports5.png", stream:"https://playersystem1.vercel.app/?kanal=beinsports5"},
-  {id:12, name:"BeIN Sports 5 B",  cat:"tr", logo:"https://royaltv37.com/img/beinsports5.png", stream:"https://playersystem1.vercel.app/?kanal=beinsports5b"},
-  {id:13, name:"BeIN Max 1", cat:"tr", logo:"https://royaltv37.com/img/beinsportsmax1.png", stream:"https://royaltv37.com/channel?id=bm1"},
-  {id:14, name:"BeIN Max 1 B", cat:"tr", logo:"https://royaltv37.com/img/beinsportsmax1.png", stream:"https://playersystem1.vercel.app/?kanal=beinmax1b"},
-  {id:15, name:"BeIN Max 2", cat:"tr", logo:"https://royaltv37.com/img/beinsportsmax2.png", stream:"https://royaltv37.com/channel?id=bm2"},
-  {id:16, name:"BeIN Max 2 B", cat:"tr", logo:"https://royaltv37.com/img/beinsportsmax2.png", stream:"https://playersystem1.vercel.app/?kanal=beinmax2b"},
-  {id:17, name:"S Sport 1", cat:"tr", logo:"https://royaltv37.com/img/ssport1.png", stream:"https://royaltv37.com/channel?id=ss"},
-  {id:18, name:"S Sport 1 B", cat:"tr", logo:"https://royaltv37.com/img/ssport1.png", stream:"https://playersystem1.vercel.app/?kanal=ssport1b"},
-  {id:19, name:"S Sport 2", cat:"tr", logo:"https://royaltv37.com/img/ssport2.png", stream:"https://royaltv37.com/channel?id=ss2"},
-  {id:20, name:"S Sport 2 B", cat:"tr", logo:"https://royaltv37.com/img/ssport2.png", stream:"https://playersystem1.vercel.app/?kanal=ssport2b"},
-  {id:21, name:"Tivibu 1", cat:"tr", logo:"https://royaltv37.com/img/tivibu1.png", stream:"https://royaltv37.com/channel?id=t1"},
-  {id:22, name:"Tivibu 1 B", cat:"tr", logo:"https://royaltv37.com/img/tivibu1.png", stream:"https://playersystem1.vercel.app/?kanal=tivibu1b"},
-  {id:23, name:"Tivibu 2", cat:"tr", logo:"https://royaltv37.com/img/tivibu2.png", stream:"https://royaltv37.com/channel?id=t2"},
-  {id:24, name:"Tivibu 2 B ", cat:"tr", logo:"https://royaltv37.com/img/tivibu2.png", stream:"https://playersystem1.vercel.app/?kanal=tivibu2b"},
-  {id:25, name:"Tivibu 3", cat:"tr", logo:"https://royaltv37.com/img/tivibu3.png", stream:"https://royaltv37.com/channel?id=t3"},
-  {id:26, name:"Tivibu 3 B", cat:"tr", logo:"https://royaltv37.com/img/tivibu3.png", stream:"https://playersystem1.vercel.app/?kanal=tivibu3b"},
-  {id:27, name:"Tivibu 4", cat:"tr", logo:"https://royaltv37.com/img/tivibu4.png", stream:"https://royaltv37.com/channel?id=t4"},
-  {id:28, name:"Tivibu 4 B", cat:"tr", logo:"https://royaltv37.com/img/tivibu4.png", stream:"https://playersystem1.vercel.app/?kanal=tivibu4b"},
-  {id:29, name:"Smartspor", cat:"tr", logo:"https://royaltv37.com/img/smartspor.png", stream:"https://royaltv37.com/channel?id=smarts"},
-  {id:30, name:"Smartspor B", cat:"tr", logo:"https://royaltv37.com/img/smartspor.png", stream:"https://playersystem1.vercel.app/?kanal=smartsporb"},
-  {id:31, name:"Smartspor 2", cat:"tr", logo:"https://royaltv37.com/img/smartspor2.png", stream:"https://royaltv37.com/channel?id=sms2"},
-  {id:32, name:"Smartspor 2 B", cat:"tr", logo:"https://royaltv37.com/img/smartspor2.png", stream:"https://playersystem1.vercel.app/?kanal=smartspor2b"},
-  {id:33, name:"TV100", cat:"tr", logo:"https://upload.wikimedia.org/wikipedia/tr/0/0f/TV100_logo.png", stream:"https://royaltv37.com/channel?id=ex1"},
-  {id:34, name:"Tabii Spor", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor"},
-  {id:35, name:"Tabii Spor 1", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor1"},
-  {id:36, name:"Tabii Spor 2", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor2"},
-  {id:37, name:"Tabii Spor 3", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor3"},
-  {id:38, name:"Tabii Spor 4", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor4"},
-  {id:39, name:"Tabii Spor 5", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor5"},
-  {id:40, name:"Tabii Spor 6", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor6"},
-  {id:41, name:"Tabii Spor 7", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor7"},
-  {id:42, name:"Tabii Spor 8", cat:"tr", logo:"https://royaltv37.com/img/tabii.png", stream:"https://playersystem1.vercel.app/?kanal=tabiispor8"},
-  {id:43, name:"TRT Spor", cat:"tr", logo:"https://royaltv37.com/img/trtspornew.png", stream:"https://playersystem1.vercel.app/?kanal=trtspor"},
-  {id:44, name:"A Spor", cat:"tr", logo:"https://royaltv37.com/img/aspornew.png", stream:"https://royaltv37.com/channel?id=as"},
-  {id:45, name:"TRT 1", cat:"tr", logo:"https://royaltv37.com/img/trt1.png", stream:"https://playersystem1.vercel.app/?kanal=trt1"},
-  {id:46, name:"ATV", cat:"tr", logo:"https://royaltv37.com/img/atv.png", stream:"https://royaltv37.com/channel?id=atv"},
-  {id:47, name:"TV 8", cat:"tr", logo:"https://royaltv37.com/img/tv8.png", stream:"https://royaltv37.com/channel?id=tv8"},
-  {id:48, name:"TV 8,5", cat:"tr", logo:"https://royaltv37.com/img/tv85.png", stream:"https://royaltv37.com/channel?id=tv85"}
-];
+/* ─────────────────────────────────────────
+   ÜLKELER
+───────────────────────────────────────── */
 
-/* ───  MAÇLAR ─── */
-const dailyMatchesByDate = [
+const countries = [
   {
-    date: "8 Eylül 2026",
-    matches: [
-      {
-        league: "Şampiyonlar Ligi - Lig Aşaması",
-        time: "19:45",
-        homeTeam: "AEK Athens",
-        homeLogo: "https://assets.football-logos.cc/logos/greece/700x700/aek-athens.a8d3ff74.png",
-        awayTeam: "LASK",
-        awayLogo: "https://assets.football-logos.cc/logos/austria/700x700/lask.a362c52e.png",
-        channelIds: [34]
-      },
-      {
-        league: "",
-        time: "19:45",
-        homeTeam: "Club Brugge",
-        homeLogo: "https://assets.football-logos.cc/logos/belgium/700x700/club-brugge.fd6c7f8b.png",
-        awayTeam: "Aston Villa",
-        awayLogo: "https://assets.football-logos.cc/logos/england/700x700/aston-villa.1c2803fb.png",
-        channelIds: [35]
-      },
-      {
-        league: "",
-        time: "22:00",
-        homeTeam: "Dortmund",
-        homeLogo: "https://assets.football-logos.cc/logos/germany/700x700/borussia-dortmund.c2e456ab.png",
-        awayTeam: "Villarreal",
-        awayLogo: "https://assets.football-logos.cc/logos/spain/700x700/villarreal.f47fae64.png",
-        channelIds: [36]
-      },
-      {
-        league: "",
-        time: "22:00",
-        homeTeam: "Lille",
-        homeLogo: "https://assets.football-logos.cc/logos/france/700x700/lille.3695616f.png",
-        awayTeam: "Real Betis",
-        awayLogo: "https://assets.football-logos.cc/logos/spain/700x700/real-betis.5bac0c39.png",
-        channelIds: [37]
-      },
-      {
-        league: "",
-        time: "22:00",
-        homeTeam: "Porto",
-        homeLogo: "https://assets.football-logos.cc/logos/portugal/700x700/fc-porto.67cd9d9f.png",
-        awayTeam: "Man. City",
-        awayLogo: "https://assets.football-logos.cc/logos/england/700x700/manchester-city.73ad38e1.png",
-        channelIds: [35]
-      },
-      {
-        league: "",
-        time: "22:00",
-        homeTeam: "Real Madrid",
-        homeLogo: "https://assets.football-logos.cc/logos/spain/700x700/real-madrid.81d3d699.png",
-        awayTeam: "Inter",
-        awayLogo: "https://assets.football-logos.cc/logos/italy/700x700/inter.305ef900.png",
-        channelIds: [34]
-      }
-    ]
+    code:"tr",
+    name:"Türkiye",
+    flag:"🇹🇷"
   }
 ];
-  
-const fallbackLogo = "https://img.icons8.com/fluency/48/television.png";
 
-let currentCategory = 'tr'; 
+
+/* ─────────────────────────────────────────
+   KANALLAR
+───────────────────────────────────────── */
+
+const channels = [
+
+  {
+    id:1,
+    name:"BeIN Sports 1",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports1.png",
+    stream:"https://royaltv37.com/channel?id=zirve"
+  },
+
+  {
+    id:2,
+    name:"BeIN Sports 1 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports1.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinsports1b"
+  },
+
+  {
+    id:3,
+    name:"BeIN Sports 1 C",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports1.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinsports1c"
+  },
+
+  {
+    id:4,
+    name:"BeIN Sports 2",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports2.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinsports2"
+  },
+
+  {
+    id:5,
+    name:"BeIN Sports 2 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports2.png",
+    stream:"https://royaltv37.com/channel?id=b2"
+  },
+
+  {
+    id:6,
+    name:"BeIN Sports 2 C",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports2.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinsports2"
+  },
+
+  {
+    id:7,
+    name:"BeIN Sports 3",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports3.png",
+    stream:"https://royaltv37.com/channel?id=b3"
+  },
+
+  {
+    id:8,
+    name:"BeIN Sports 3 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports3.png",
+    stream:"https://royaltv37.com/channel?id=beinsports3"
+  },
+
+  {
+    id:9,
+    name:"BeIN Sports 4",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports4.png",
+    stream:"https://royaltv37.com/channel?id=b4"
+  },
+
+  {
+    id:10,
+    name:"BeIN Sports 4 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports4.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinsports4b"
+  },
+
+  {
+    id:11,
+    name:"BeIN Sports 5",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports5.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinsports5"
+  },
+
+  {
+    id:12,
+    name:"BeIN Sports 5 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsports5.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinsports5b"
+  },
+
+  {
+    id:13,
+    name:"BeIN Max 1",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsportsmax1.png",
+    stream:"https://royaltv37.com/channel?id=bm1"
+  },
+
+  {
+    id:14,
+    name:"BeIN Max 1 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsportsmax1.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinmax1b"
+  },
+
+  {
+    id:15,
+    name:"BeIN Max 2",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsportsmax2.png",
+    stream:"https://royaltv37.com/channel?id=bm2"
+  },
+
+  {
+    id:16,
+    name:"BeIN Max 2 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/beinsportsmax2.png",
+    stream:"https://playersystem1.vercel.app/?kanal=beinmax2b"
+  },
+
+  {
+    id:17,
+    name:"S Sport 1",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/ssport1.png",
+    stream:"https://royaltv37.com/channel?id=ss"
+  },
+
+  {
+    id:18,
+    name:"S Sport 1 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/ssport1.png",
+    stream:"https://playersystem1.vercel.app/?kanal=ssport1b"
+  },
+
+  {
+    id:19,
+    name:"S Sport 2",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/ssport2.png",
+    stream:"https://royaltv37.com/channel?id=ss2"
+  },
+
+  {
+    id:20,
+    name:"S Sport 2 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/ssport2.png",
+    stream:"https://playersystem1.vercel.app/?kanal=ssport2b"
+  },
+
+  {
+    id:21,
+    name:"Tivibu 1",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tivibu1.png",
+    stream:"https://royaltv37.com/channel?id=t1"
+  },
+
+  {
+    id:22,
+    name:"Tivibu 1 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tivibu1.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tivibu1b"
+  },
+
+  {
+    id:23,
+    name:"Tivibu 2",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tivibu2.png",
+    stream:"https://royaltv37.com/channel?id=t2"
+  },
+
+  {
+    id:24,
+    name:"Tivibu 2 B ",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tivibu2.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tivibu2b"
+  },
+
+  {
+    id:25,
+    name:"Tivibu 3",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tivibu3.png",
+    stream:"https://royaltv37.com/channel?id=t3"
+  },
+
+  {
+    id:26,
+    name:"Tivibu 3 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tivibu3.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tivibu3b"
+  },
+
+  {
+    id:27,
+    name:"Tivibu 4",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tivibu4.png",
+    stream:"https://royaltv37.com/channel?id=t4"
+  },
+
+  {
+    id:28,
+    name:"Tivibu 4 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tivibu4.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tivibu4b"
+  },
+
+  {
+    id:29,
+    name:"Smartspor",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/smartspor.png",
+    stream:"https://royaltv37.com/channel?id=smarts"
+  },
+
+  {
+    id:30,
+    name:"Smartspor B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/smartspor.png",
+    stream:"https://playersystem1.vercel.app/?kanal=smartsporb"
+  },
+
+  {
+    id:31,
+    name:"Smartspor 2",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/smartspor2.png",
+    stream:"https://royaltv37.com/channel?id=sms2"
+  },
+
+  {
+    id:32,
+    name:"Smartspor 2 B",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/smartspor2.png",
+    stream:"https://playersystem1.vercel.app/?kanal=smartspor2b"
+  },
+
+  {
+    id:33,
+    name:"TV100",
+    cat:"tr",
+    logo:"https://upload.wikimedia.org/wikipedia/tr/0/0f/TV100_logo.png",
+    stream:"https://royaltv37.com/channel?id=ex1"
+  },
+
+  {
+    id:34,
+    name:"Tabii Spor",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor"
+  },
+
+  {
+    id:35,
+    name:"Tabii Spor 1",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor1"
+  },
+
+  {
+    id:36,
+    name:"Tabii Spor 2",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor2"
+  },
+
+  {
+    id:37,
+    name:"Tabii Spor 3",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor3"
+  },
+
+  {
+    id:38,
+    name:"Tabii Spor 4",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor4"
+  },
+
+  {
+    id:39,
+    name:"Tabii Spor 5",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor5"
+  },
+
+  {
+    id:40,
+    name:"Tabii Spor 6",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor6"
+  },
+
+  {
+    id:41,
+    name:"Tabii Spor 7",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor7"
+  },
+
+  {
+    id:42,
+    name:"Tabii Spor 8",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tabii.png",
+    stream:"https://playersystem1.vercel.app/?kanal=tabiispor8"
+  },
+
+  {
+    id:43,
+    name:"TRT Spor",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/trtspornew.png",
+    stream:"https://playersystem1.vercel.app/?kanal=trtspor"
+  },
+
+  {
+    id:44,
+    name:"A Spor",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/aspornew.png",
+    stream:"https://royaltv37.com/channel?id=as"
+  },
+
+  {
+    id:45,
+    name:"TRT 1",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/trt1.png",
+    stream:"https://playersystem1.vercel.app/?kanal=trt1"
+  },
+
+  {
+    id:46,
+    name:"ATV",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/atv.png",
+    stream:"https://royaltv37.com/channel?id=atv"
+  },
+
+  {
+    id:47,
+    name:"TV 8",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tv8.png",
+    stream:"https://royaltv37.com/channel?id=tv8"
+  },
+
+  {
+    id:48,
+    name:"TV 8,5",
+    cat:"tr",
+    logo:"https://royaltv37.com/img/tv85.png",
+    stream:"https://royaltv37.com/channel?id=tv85"
+  }
+];
+
+
+/* ─────────────────────────────────────────
+   MAÇLAR
+───────────────────────────────────────── */
+
+const dailyMatchesByDate = [
+
+  {
+    date:"8 Eylül 2026",
+
+    matches:[
+
+      {
+        league:"Şampiyonlar Ligi - Lig Aşaması",
+        time:"19:45",
+        homeTeam:"AEK Athens",
+        homeLogo:"https://assets.football-logos.cc/logos/greece/700x700/aek-athens.a8d3ff74.png",
+        awayTeam:"LASK",
+        awayLogo:"https://assets.football-logos.cc/logos/austria/700x700/lask.a362c52e.png",
+        channelIds:[34]
+      },
+
+      {
+        league:"",
+        time:"19:45",
+        homeTeam:"Club Brugge",
+        homeLogo:"https://assets.football-logos.cc/logos/belgium/700x700/club-brugge.fd6c7f8b.png",
+        awayTeam:"Aston Villa",
+        awayLogo:"https://assets.football-logos.cc/logos/england/700x700/aston-villa.1c2803fb.png",
+        channelIds:[35]
+      },
+
+      {
+        league:"",
+        time:"22:00",
+        homeTeam:"Dortmund",
+        homeLogo:"https://assets.football-logos.cc/logos/germany/700x700/borussia-dortmund.c2e456ab.png",
+        awayTeam:"Villarreal",
+        awayLogo:"https://assets.football-logos.cc/logos/spain/700x700/villarreal.f47fae64.png",
+        channelIds:[36]
+      },
+
+      {
+        league:"",
+        time:"22:00",
+        homeTeam:"Lille",
+        homeLogo:"https://assets.football-logos.cc/logos/france/700x700/lille.3695616f.png",
+        awayTeam:"Real Betis",
+        awayLogo:"https://assets.football-logos.cc/logos/spain/700x700/real-betis.5bac0c39.png",
+        channelIds:[37]
+      },
+
+      {
+        league:"",
+        time:"22:00",
+        homeTeam:"Porto",
+        homeLogo:"https://assets.football-logos.cc/logos/portugal/700x700/fc-porto.67cd9d9f.png",
+        awayTeam:"Man. City",
+        awayLogo:"https://assets.football-logos.cc/logos/england/700x700/manchester-city.73ad38e1.png",
+        channelIds:[35]
+      },
+
+      {
+        league:"",
+        time:"22:00",
+        homeTeam:"Real Madrid",
+        homeLogo:"https://assets.football-logos.cc/logos/spain/700x700/real-madrid.81d3d699.png",
+        awayTeam:"Inter",
+        awayLogo:"https://assets.football-logos.cc/logos/italy/700x700/inter.305ef900.png",
+        channelIds:[34]
+      }
+
+    ]
+  }
+
+];
+
+
+/* ─────────────────────────────────────────
+   BAŞLANGIÇ
+───────────────────────────────────────── */
+
+const fallbackLogo =
+  "https://img.icons8.com/fluency/48/television.png";
+
+let currentCategory = 'tr';
 let currentSearch = '';
-let activeTab = 'channels'; 
+let activeTab = 'channels';
 let activeId = null;
 
 renderCountryFilters();
 renderList();
+
 </script>
+
 </body>
-</html>
+  </html>
